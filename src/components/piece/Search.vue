@@ -11,7 +11,7 @@ export default {
 <style scoped>
 #search{
   width: 192px;
-  height: 37px;
+  height: 34px;
   margin-right: 37px;
   margin-bottom: 10px;
   border: 2px solid #E1E7EE;

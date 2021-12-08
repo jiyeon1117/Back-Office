@@ -45,13 +45,8 @@ export default {
 </script>
 
 <style scoped>
-table {
-  margin: 12px 0px 0px 37px;
-}
-
 .Search{
   margin-top: 20px;
   float: right;
 }
-
 </style>

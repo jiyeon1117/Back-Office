@@ -3,6 +3,9 @@
     <div class="title Eng">Setting</div>
     <div class="Box">
       <div class="box-title">DB 연결 정보</div>
+      <div class="btn">
+        <button>Edit</button>
+      </div>
       <div class="group">
         <div class="text">기본 작업 DB IP</div>
         <input type="text" name="ip" class="input ip" placeholder="ip">
@@ -21,13 +24,26 @@
 
 <script>
 export default {
-  
+
 }
 </script>
 
 <style scoped>
 .Box{
   height: 360px;
+}
+button {
+  margin-top: -40px;
+  margin-right: 37px;
+  float: right;
+  background-color: #003366;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  padding: 8px 16px 8px 16px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 900;
 }
 .group {
   display: block;  
@@ -54,7 +70,6 @@ export default {
   outline: none;
   padding-left: 12px;
 }
-
 .ip{
   margin-left: 160px;
 }

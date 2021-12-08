@@ -63,6 +63,7 @@ body {
 }
 /* 테이블 관련 */
 table {
+  margin: 10px 0px 0px 37px;
   width: 1026px;
   height: 450px;
   table-layout: fixed; 
@@ -91,9 +92,9 @@ td{
 }
 /* 필터 */
 .store{
-  margin: 15px 0px 0px 37px;
+  margin: 20px 0px 0px 37px;
 }
 .sector{
-  margin: 15px 0px 0px 10px;
+  margin: 20px 0px 0px 5px;
 }
 </style>

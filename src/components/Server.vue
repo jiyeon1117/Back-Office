@@ -31,12 +31,8 @@ export default {
 </script>
 
 <style scoped>
-table {
-  margin: 15px 0px 0px 37px;
-}
 .search{
   margin-top: -10px;
   float: right;
 }
-
 </style>
