@@ -5,6 +5,7 @@ import Server from '@/components/Server'
 import Setting from '@/components/Setting'
 import Send from '@/components/Send'
 import Schedule from '@/components/Schedule'
+import ScaleModal from '@/components/ScaleModal'
 Vue.use(Router)
 
 export default new Router({
@@ -13,12 +14,12 @@ export default new Router({
     {
       path: '/',
       name: 'Scale',
-      component: Scale
+      component: Scale, ScaleModal
     },
     {
       path: '/Scale',
       name: 'Scale',
-      component: Scale
+      component: Scale, ScaleModal
     },
     {
       path: '/Server',

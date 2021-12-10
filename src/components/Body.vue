@@ -27,8 +27,9 @@ body {
   display: inline;
   position: absolute;
   float: left;
-  width: calc(100% - 250px);
-  height: calc(100% - 80px);
+  width: calc(100% - 220px);
+  height: calc(100% - 60px);
   background-color: #F3F9FF;
+  overflow: auto;
 }
 </style>

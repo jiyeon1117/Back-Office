@@ -17,11 +17,11 @@
           <th>전송여부</th>
           <th>최종전송일시</th>
         </tr>
-        <tr v-for="i in 9" :key="i">
-          <td>저울코드</td>
-          <td>전송업무코드</td>
-          <td>전송여부</td>
-          <td>최종전송일시</td>
+        <tr v-for="i in sendResultList" :key="i.scaleCode">
+          <td>{{i.scaleCode}}</td>
+          <td>{{i.sendTaskCode}}</td>
+          <td>{{i.sendYn}}</td>
+          <td>{{i.fnlSendDt}}</td>
         </tr>
       </table>
     </div>
@@ -31,8 +31,28 @@
 <script>
 import Search from './piece/Search.vue'
 import Select from './piece/Select.vue'
+import axios from 'axios'
 
 export default {
+  name: "SendResultList",
+  data(){
+    return{
+      sendResultList : []
+    }
+  },
+  methods: {
+    resultCall() {
+      axios({
+        url: "http://172.16.18.116:8080/scaleSendResult",
+        method: "GET"
+      }).then(res => {
+        console.log(res.data.data)
+        this.sendResultList = res.data.data
+      }).catch(res => {
+
+      });
+    }
+  },
   components: {
     'Search' : Search,
     'Select' : Select
@@ -43,6 +63,7 @@ export default {
 <style scoped>
 .Search{
   position: absolute;
+  margin-right: 37px;
   margin-top: 20px;
   margin-left: 10px;
 }

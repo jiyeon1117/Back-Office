@@ -3,6 +3,8 @@
     <Header></Header>
     <Menu></Menu>
     <Body></Body>
+    <ScaleModal></ScaleModal>
+    <ScheduleModal></ScheduleModal>
   </div>
 </template>
 
@@ -10,13 +12,22 @@
 import Header from './components/Header.vue'
 import Menu from './components/Menu.vue'
 import Body from './components/Body.vue'
+import ScaleModal from './components/ScaleModal.vue'
+import ScheduleModal from './components/ScheduleModal.vue'
+
 
 export default {
   name: 'App',
+  data(){
+    return {
+    }
+  },
   components: {
     'Header' : Header,
     'Menu' : Menu,
-    'Body' : Body
+    'Body' : Body,
+    'ScaleModal' : ScaleModal,
+    'ScheduleModal' : ScheduleModal
   }
 }
 </script>
@@ -30,23 +41,23 @@ body {
 /* title 관련 */
 .title{
   color: #003366;
-  font-size: 48px;
+  font-size: 44px;
   font-weight: 500;
 }
 .Eng {
   font-family: 'Roboto', sans-serif;
-  margin: 50px 0px 0px 45px;
+  margin: 40px 0px 0px 45px;
 }
 .Kor {
   font-family: 'Noto Sans KR', sans-serif;
-  margin: 45px 0px 0px 45px;
-  font-size: 44px;
+  font-size: 40px;
   font-weight: 700;
+  margin: 35px 0px 0px 45px;
 }
 /* 박스 관련  */
 .Box {
   position: relative;
-  margin: 35px 0px 0px 45px;
+  margin: 30px 0px 0px 45px;
   width: 1100px;
   height: 684px;
   background-color: white;
@@ -58,7 +69,7 @@ body {
   margin: 30px 0px 0px 37px;
   font-family: 'Noto Sans KR', sans-serif;
   font-weight: 500;
-  font-size: 30px;
+  font-size: 28px;
   color: #003366;
 }
 /* 테이블 관련 */
@@ -96,5 +107,34 @@ td{
 }
 .sector{
   margin: 20px 0px 0px 5px;
+}
+/* 모달 */
+.black-bg{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+}
+.white-bg{
+  background-color: white;
+  border: 8px;
+  padding: 10px;
+}
+
+#select{
+  width: 100px;
+  height: 37px;
+  border: 2px solid #003366;
+  border-radius: 10px;
+  padding-left: 8px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #003366;
+  outline: none;
+  vertical-align: middle;
 }
 </style>

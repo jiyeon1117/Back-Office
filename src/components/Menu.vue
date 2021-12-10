@@ -27,12 +27,12 @@ export default {
 .side-menu {
   float: left;
   margin: 0;
-  width: 250px;
+  margin-top: 15px;
+  width: 220px;
   height: calc(100vh - 80px);
 }
 ul{
-  margin-top: 32px;
-  font-size: 26px;
+  font-size: 24px;
   font-family: 'Noto Sans KR', sans-serif;
   font-weight: 500;
   list-style: none;
@@ -40,7 +40,7 @@ ul{
 }
 ul li{
   margin: 8px 0px 2px;
-  font-size: 18px;
+  font-size: 16px;
   font-family: 'Noto Sans KR', sans-serif;
   font-weight: 400;
 }

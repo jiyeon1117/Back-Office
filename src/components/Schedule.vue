@@ -1,4 +1,4 @@
-<template>
+<template>  
   <div>
     <div class="title Kor">스케쥴 설정</div>
     <div class="Box">
@@ -18,16 +18,16 @@
           <th>프로그램실행<br>시작시각</th>
           <th>프로그램실행<br>종료시각</th>
         </tr>
-        <tr v-for="i in 7" :key="i">
-          <td>저울코드</td>
-          <td>서버프로그램 ID</td>
-          <td>통신상태<br>전송주기</td>
-          <td>일괄처리<br>저울대수</td>
-          <td>통신상태확인<br>시작시각</td>
-          <td>통신상태확인<br>종료시각</td>
-          <td>프로그램최종<br>실행일시</td>
-          <td>프로그램실행<br>시작시각</td>
-          <td>프로그램실행<br>종료시각</td>
+        <tr v-for="i in svrBatchList" :key="i">
+          <td>{{i.scaleSvrId}}</td>
+          <td>{{i.scalePgmId}}</td>
+          <td>{{i.comnStatSendCycleVal}}</td>
+          <td>{{i.AllProScaleCntr}}</td>
+          <td>{{i.comnStatDefStartTm}}</td>
+          <td>{{i.comnStatDefEndTm}}</td>
+          <td>{{i.pgmFnlExecDt}}</td>
+          <td>{{i.pgmExecStartTm}}</td>
+          <td>{{I.pgmExecEndTm}}</td>
         </tr>
       </table>
     </div>
@@ -37,8 +37,27 @@
 <script>
 import Search from './piece/Search.vue'
 import Select from './piece/Select.vue'
+import axios from 'axios'
 
 export default {
+  name: "SvrBatchList",
+  data() {
+    return{
+      svrBatchList : []
+    }
+  },
+  methods: {
+    batchCall(){
+      axios({
+        url: "http://172.16.18.116:8080/scaleSvrBatch",
+        method: "GET"
+      }).then(res => {
+        console.log(res.data.data)
+      }).catch(res => {
+
+      });
+    }
+  },
   components: {
     'Search' : Search,
     'Select' : Select
