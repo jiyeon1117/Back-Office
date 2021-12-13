@@ -123,7 +123,6 @@ td{
   border: 8px;
   padding: 10px;
 }
-
 #select{
   width: 100px;
   height: 37px;
@@ -137,4 +136,5 @@ td{
   outline: none;
   vertical-align: middle;
 }
+
 </style>

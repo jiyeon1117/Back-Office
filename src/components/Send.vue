@@ -53,6 +53,9 @@ export default {
       });
     }
   },
+  created() {
+    this.resultCall()
+  },
   components: {
     'Search' : Search,
     'Select' : Select

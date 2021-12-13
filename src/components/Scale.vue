@@ -4,10 +4,12 @@
     <div class="Box">
       <div class="box-title">저울 통신 상태</div>
       <select class="store" id="select">
-        <option value="value" v-for="i in scaleList" :key="i.scaleCode">{{i.strCode}}</option>
+        <option value="" selected disabled hidden>매장</option>
+        <option value="value" v-for="(i, index) in scaleList" :key="index">{{i.strCode}}</option>
       </select>
       <select class="sector" id="select">
-        <option value="value" v-for="i in scaleList" :key="i.scaleSectorCode">{{i.scaleSectorCode}}</option>
+        <option value="" selected disabled hidden>부문</option>
+        <option value="value" v-for="(i, index) in scaleList" :key="index">{{i.scaleSectorCode}}</option>
       </select>
       <Search class="Search"></Search>
       <table>

@@ -18,16 +18,16 @@
           <th>프로그램실행<br>시작시각</th>
           <th>프로그램실행<br>종료시각</th>
         </tr>
-        <tr v-for="i in svrBatchList" :key="i">
+        <tr v-for="i in svrBatchList" :key="i.scaleSvrId">
           <td>{{i.scaleSvrId}}</td>
           <td>{{i.scalePgmId}}</td>
           <td>{{i.comnStatSendCycleVal}}</td>
-          <td>{{i.AllProScaleCntr}}</td>
+          <td>{{i.allProScaleCntr}}</td>
           <td>{{i.comnStatDefStartTm}}</td>
           <td>{{i.comnStatDefEndTm}}</td>
           <td>{{i.pgmFnlExecDt}}</td>
           <td>{{i.pgmExecStartTm}}</td>
-          <td>{{I.pgmExecEndTm}}</td>
+          <td>{{i.pgmExecEndTm}}</td>
         </tr>
       </table>
     </div>
@@ -53,10 +53,14 @@ export default {
         method: "GET"
       }).then(res => {
         console.log(res.data.data)
+        this.svrBatchList = res.data.data
       }).catch(res => {
 
       });
     }
+  },
+  created() {
+    this.batchCall()
   },
   components: {
     'Search' : Search,
