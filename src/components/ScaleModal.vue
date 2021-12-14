@@ -3,7 +3,7 @@
       <div class="white-bg">
         <button @click="Modal = false"><img :src="imgSrc" class="img"></button>
         <div class="box-title">전송 결과</div>
-        <Search class="Search"></Search>
+        <input type="text" name="search" id="search" placeholder="Search (StrCode)" v-model="search" @input="SearchInput" @keydown.tab="KeydownTab">
         <table>
           <tr>
             <th>저울코드</th>
@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import Search from './piece/Search.vue'
 import axios from 'axios'
 
 export default {
@@ -32,7 +31,8 @@ export default {
     return {
       Modal : true,
       imgSrc : require('../assets/close.png'),
-      sendResultList : []
+      sendResultList : [],
+      search: ""
     }
   },
   methods: {
@@ -44,20 +44,41 @@ export default {
         console.log(res.data.data)
         this.sendResultList = res.data.data
       }).catch(res => {
-
       });
+    },
+    SearchInput(e){
+      this.search = e.target.value;
+      if(this.search.length !== 0){
+        clearTimeout(this.debounce);
+        this.debounce = setTimeout(() => {
+          const filterList = this.sendResultList.filter(items => items.scaleCode.includes(this.search));
+          console.log(filterList)
+          this.sendResultList = filterList;
+        }, 100);
+      }else {
+        clearTimeout(this.debounce);
+        this.debounce = setTimeout(()=> {
+          this.ResultListCall()
+        });
+      }
     }
+
   },
   created() {
     this.ResultListCall()
   },
   components: {
-    'Search' : Search
   }
 }
 </script>
 
 <style scoped>
+#search{
+  float: right;
+  margin-top: -10px;
+  margin-right: 30px;
+}
+
 .box-title{
   margin-left: 29px;
   font-size: 26px;
@@ -65,13 +86,7 @@ export default {
 
 .white-bg{
   width: 660px;
-  height: 440px;
-}
-
-.Search{
-  float: right;
-  margin-top: -10px;
-  margin-right: 30px;
+  padding: 0px 0px 32px 0px;
 }
 
 table {

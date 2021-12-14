@@ -5,7 +5,7 @@
       <div class="box-title">재전송 명령</div>
       <Select class="store"></Select>
       <Select class="sector"></Select>
-      <Search class="Search"></Search>
+      <input type="text" name="search" id="search" placeholder="Search (StrCode)" v-model="search" @input="SearchInput" @keydown.tab="KeydownTab">
       <Select class="task"></Select>
       <div class="btn">
         <button>Recent</button>
@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import Search from './piece/Search.vue'
 import Select from './piece/Select.vue'
 import axios from 'axios'
 
@@ -37,7 +36,8 @@ export default {
   name: "SendResultList",
   data(){
     return{
-      sendResultList : []
+      sendResultList : [],
+      search: ""
     }
   },
   methods: {
@@ -51,26 +51,40 @@ export default {
       }).catch(res => {
 
       });
+    },
+    SearchInput(e){
+      this.search = e.target.value;
+      if(this.search.length !== 0){
+        clearTimeout(this.debounce);
+        this.debounce = setTimeout(() => {
+          const filterList = this.sendResultList.filter(items => items.scaleCode.includes(this.search));
+          console.log(filterList)
+          this.sendResultList = filterList;
+        }, 100);
+      }else {
+        clearTimeout(this.debounce);
+        this.debounce = setTimeout(()=> {
+          this.resultCall()
+        });
+      }
     }
   },
   created() {
     this.resultCall()
   },
   components: {
-    'Search' : Search,
     'Select' : Select
   }
 }
 </script>
 
 <style scoped>
-.Search{
+#search{  
   position: absolute;
   margin-right: 37px;
   margin-top: 20px;
   margin-left: 10px;
 }
-
 .task{
   float: right;
   margin: 20px 138px 0px 0px;

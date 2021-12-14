@@ -5,7 +5,7 @@
       <div class="box-title">스케쥴 설정</div>
       <Select class="store"></Select>
       <Select class="sector"></Select>
-      <Search class="Search"></Search>
+      <input type="text" name="search" id="search" placeholder="Search (scaleSvrId)" v-model="search" @input="SearchInput" @keydown.tab="KeydownTab">
       <table>
         <tr>
           <th>저울코드</th>
@@ -35,7 +35,6 @@
 </template>
 
 <script>
-import Search from './piece/Search.vue'
 import Select from './piece/Select.vue'
 import axios from 'axios'
 
@@ -43,7 +42,8 @@ export default {
   name: "SvrBatchList",
   data() {
     return{
-      svrBatchList : []
+      svrBatchList : [],
+      search: ""
     }
   },
   methods: {
@@ -57,19 +57,39 @@ export default {
       }).catch(res => {
 
       });
+    },
+    SearchInput(e){
+      this.search = e.target.value;
+      if(this.search.length !== 0){
+        clearTimeout(this.debounce);
+        this.debounce = setTimeout(() => {
+          const filterList = this.svrBatchList.filter(items => items.scaleSvrId.includes(this.search));
+          console.log(filterList)
+          this.svrBatchList = filterList;
+        }, 100);
+      }else {
+        clearTimeout(this.debounce);
+        this.debounce = setTimeout(()=> {
+          this.batchCall()
+        });
+      }
     }
   },
   created() {
     this.batchCall()
   },
   components: {
-    'Search' : Search,
     'Select' : Select
   }
 }
 </script>
 
 <style scoped>
+#search{
+  position: absolute;
+  margin-top: 20px;
+  margin-left: 10px;
+}
 table {
   margin: 10px 0px 0px 37px;
 }
@@ -78,10 +98,5 @@ th {
 }
 td {
   font-size: 13pt;
-}
-.Search{
-  position: absolute;
-  margin-top: 20px;
-  margin-left: 10px;
 }
 </style>

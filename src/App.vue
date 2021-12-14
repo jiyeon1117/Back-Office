@@ -57,9 +57,10 @@ body {
 /* 박스 관련  */
 .Box {
   position: relative;
+  padding: 0px 0px 40px 0px;
   margin: 30px 0px 0px 45px;
   width: 1100px;
-  height: 684px;
+  height: 100%;
   background-color: white;
   border: 1px solid #DDDDDD;
   border-radius: 10px;
@@ -114,7 +115,7 @@ td{
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
 }
@@ -137,4 +138,21 @@ td{
   vertical-align: middle;
 }
 
+#search{
+  width: 192px;
+  height: 34px;
+  margin-bottom: 10px;
+  border: 2px solid #E1E7EE;
+  border-radius: 10px;
+  background-color: #F5F8FA;
+
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  outline: none;
+  padding-left: 8px;
+}
+input::placeholder {
+  color: #557EA7;
+}
 </style>

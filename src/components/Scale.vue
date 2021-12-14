@@ -11,7 +11,7 @@
         <option value="" selected disabled hidden>부문</option>
         <option value="value" v-for="(i, index) in scaleList" :key="index">{{i.scaleSectorCode}}</option>
       </select>
-      <Search class="Search"></Search>
+      <input type="text" name="search" id="search" placeholder="Search (StrCode)" v-model="search" @input="SearchInput" @keydown.tab="KeydownTab">
       <table>
         <tr>
           <th>매장</th>
@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import Search from './piece/Search.vue'
 import Select from './piece/Select.vue'
 import axios from 'axios'
 
@@ -47,7 +46,8 @@ export default {
   name: "ScaleList",
   data(){
     return{
-      scaleList : []
+      scaleList : [],
+      search: ""
     }
   },
   methods: {
@@ -57,27 +57,41 @@ export default {
         method: "GET"
       }).then(res => {
         console.log(res.data.data)
-        this.scaleList = res.data.data
+        this.scaleList = res.data.data;
       }).catch(res => {
 
       });
+    },
+    SearchInput(e){
+      this.search = e.target.value;
+      if(this.search.length !== 0){
+        clearTimeout(this.debounce);
+        this.debounce = setTimeout(() => {
+          const filterList = this.scaleList.filter(items => items.scaleCode.includes(this.search));
+          console.log(filterList)
+          this.scaleList = filterList;
+        }, 100);
+      }else {
+        clearTimeout(this.debounce);
+        this.debounce = setTimeout(()=> {
+          this.scaleCall()
+        });
+      }
     }
   },
   created() {
     this.scaleCall()
   },
   components: {
-    'Search' : Search,
     'Select' : Select
   }
 }
 </script>
 
 <style scoped>
-.Search{
+#search{
   margin-right: 37px;
   margin-top: 20px;
   float: right;
 }
-
 </style>

@@ -3,7 +3,7 @@
     <div class="title Eng">Server</div>
     <div class="Box">
       <div class="box-title">서버 통신 상태</div>
-      <Search class="search"></Search>
+      <input type="text" name="search" id="search" placeholder="Search (scaleSvrId)" v-model="search" @input="SearchInput" @keydown.tab="KeydownTab">
       <table>
         <tr>
           <th>서버</th>
@@ -21,14 +21,14 @@
 </template>
 
 <script>
-import Search from './piece/Search.vue'
 import axios from 'axios'
 
 export default {
   name: "ServerList",
   data(){
     return{
-      serverList : []
+      serverList : [],
+      search : ""
     }
   },
   methods: {
@@ -42,21 +42,36 @@ export default {
       }).catch(res => {
 
       });
+    },
+    SearchInput(e){
+      this.search = e.target.value;
+      if(this.search.length !== 0){
+        clearTimeout(this.debounce);
+        this.debounce = setTimeout(() => {
+          const filterList = this.serverList.filter(items => items.scaleSvrId.includes(this.search));
+          console.log(filterList)
+          this.serverList = filterList;
+        }, 100);
+      }else {
+        clearTimeout(this.debounce);
+        this.debounce = setTimeout(()=> {
+          this.scaleCall()
+        });
+      }
     }
   },
   created() {
     this.serverCall()
   },
   components: {
-    'Search' : Search
   }
 }
 </script>
 
 <style scoped>
-.search{
+#search{
+  float: right;
   margin-right: 37px;
   margin-top: -10px;
-  float: right;
 }
 </style>
