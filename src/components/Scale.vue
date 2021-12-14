@@ -5,11 +5,11 @@
       <div class="box-title">저울 통신 상태</div>
       <select class="store" id="select">
         <option value="" selected disabled hidden>매장</option>
-        <option value="value" v-for="(i, index) in scaleList" :key="index">{{i.strCode}}</option>
+        <option :value="i.strCode" v-for="i in storeFilter" :key="i">{{i}}</option>
       </select>
       <select class="sector" id="select">
         <option value="" selected disabled hidden>부문</option>
-        <option value="value" v-for="(i, index) in scaleList" :key="index">{{i.scaleSectorCode}}</option>
+        <option :value="i.scaleSectorCode" v-for="i in sectorFilter" :key="i">{{i}}</option>
       </select>
       <input type="text" name="search" id="search" placeholder="Search (StrCode)" v-model="search" @input="SearchInput" @keydown.tab="KeydownTab">
       <table>
@@ -47,7 +47,9 @@ export default {
   data(){
     return{
       scaleList : [],
-      search: ""
+      search: "",
+      storeList: [], storeFilter: [],
+      sectorList: [], sectorFilter: []
     }
   },
   methods: {
@@ -58,6 +60,7 @@ export default {
       }).then(res => {
         console.log(res.data.data)
         this.scaleList = res.data.data;
+        this.StoreFilter(); this.SectorFilter();
       }).catch(res => {
 
       });
@@ -77,6 +80,24 @@ export default {
           this.scaleCall()
         });
       }
+    },
+    StoreFilter(){
+      for(var i in this.scaleList){
+        this.storeList.push(this.scaleList[i].strCode)
+        this.storeFilter = this.storeList.filter((element, index) =>
+          this.storeList.indexOf(element) === index
+      )}
+      console.log('StoreFilter',this.storeList, this.storeFilter.sort())
+      return this.storeFilter.sort();
+    },
+    SectorFilter(){
+      for(var i in this.scaleList){
+        this.sectorList.push(this.scaleList[i].scaleSectorCode)
+        this.sectorFilter = this.sectorList.filter((element, index) =>
+          this.sectorList.indexOf(element) === index
+      )}
+      console.log('SectorFilter',this.sectorList, this.sectorFilter.sort())
+      return this.sectorFilter.sort();
     }
   },
   created() {
