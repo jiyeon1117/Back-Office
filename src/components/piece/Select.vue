@@ -24,5 +24,4 @@ export default {
   outline: none;
   vertical-align: middle;
 }
-
 </style>

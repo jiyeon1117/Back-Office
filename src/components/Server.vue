@@ -3,7 +3,7 @@
     <div class="title Eng">Server</div>
     <div class="Box">
       <div class="box-title">서버 통신 상태</div>
-      <input type="text" name="search" id="search" placeholder="Search (scaleSvrId)" v-model="search" @input="SearchInput" @keydown.tab="KeydownTab">
+      <input type="text" name="search" id="search" placeholder="서버 검색" v-model="search" @input="SearchInput" @keydown.tab="KeydownTab">
       <table>
         <tr>
           <th>서버</th>

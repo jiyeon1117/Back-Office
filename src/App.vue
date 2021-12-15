@@ -3,8 +3,6 @@
     <Header></Header>
     <Menu></Menu>
     <Body></Body>
-    <ScaleModal></ScaleModal>
-    <ScheduleModal></ScheduleModal>
   </div>
 </template>
 
@@ -14,7 +12,6 @@ import Menu from './components/Menu.vue'
 import Body from './components/Body.vue'
 import ScaleModal from './components/ScaleModal.vue'
 import ScheduleModal from './components/ScheduleModal.vue'
-
 
 export default {
   name: 'App',
@@ -59,7 +56,7 @@ body {
   position: relative;
   padding: 0px 0px 40px 0px;
   margin: 30px 0px 0px 45px;
-  width: 1100px;
+  width: 1300px;
   height: 100%;
   background-color: white;
   border: 1px solid #DDDDDD;
@@ -76,16 +73,20 @@ body {
 /* 테이블 관련 */
 table {
   margin: 10px 0px 0px 37px;
-  width: 1026px;
-  height: 450px;
-  table-layout: fixed; 
-  border: 1px solid #E1E7EE;
+  width: 94%;
+  height: 100%;
+  table-layout: fixed;
+
   border-collapse: collapse;
+  border-style: hidden;
+  box-shadow: 0 0 0 1px #E1E7EE;
+  border-radius: 10px;
   text-align: center;
   font-family: 'Noto Sans KR', sans-serif;
 }
 th{
-  height: 45px;
+  max-height: 47px;
+  padding: 11px;
   color: white;
   font-size: 15pt;
   font-weight: 500;
@@ -93,11 +94,12 @@ th{
   background-color: #003366;
 }
 tr{
-  height: 44px;
   border-radius: 10px;
   border-bottom: 1px solid #E1E7EE;
 }
 td{
+  max-height: 46px;
+  padding: 11px;
   font-size: 14pt;
   color: #374554;
   font-weight: 500;
@@ -146,7 +148,7 @@ td{
   border-radius: 10px;
   background-color: #F5F8FA;
 
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
   font-weight: 500;
   font-size: 17px;
   outline: none;
@@ -154,5 +156,8 @@ td{
 }
 input::placeholder {
   color: #557EA7;
+}
+a {
+  color: blue;
 }
 </style>

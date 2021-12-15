@@ -3,13 +3,13 @@
     <div class="title Kor">재전송 명령</div>
     <div class="Box">
       <div class="box-title">재전송 명령</div>
-      <Select class="store"></Select>
-      <Select class="sector"></Select>
-      <input type="text" name="search" id="search" placeholder="Search (StrCode)" v-model="search" @input="SearchInput" @keydown.tab="KeydownTab">
-      <Select class="task"></Select>
+      <input type="text" name="search" id="search" placeholder="저울코드 검색" v-model="search" @input="SearchInput" @keydown.tab="KeydownTab">
       <div class="btn">
         <button>Recent</button>
       </div>
+      <select name="select" id="select" class="task">
+        <option v-for="(i, index) in task" :key="index" :value="index">{{i}}</option>
+      </select>
       <table>
         <tr>
           <th>저울코드</th>
@@ -19,8 +19,8 @@
         </tr>
         <tr v-for="i in sendResultList" :key="i.scaleCode">
           <td>{{i.scaleCode}}</td>
-          <td>{{i.sendTaskCode}}</td>
-          <td>{{i.sendYn}}</td>
+          <td>{{i.sendTaskCode != null ? task[parseInt(i.sendTaskCode)-1] : 'X'}}</td>
+          <td>{{i.sendYn == '1' ? '성공': '실패'}}</td>
           <td>{{i.fnlSendDt}}</td>
         </tr>
       </table>
@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import Select from './piece/Select.vue'
 import axios from 'axios'
 
 export default {
@@ -37,7 +36,8 @@ export default {
   data(){
     return{
       sendResultList : [],
-      search: ""
+      search: "",
+      task: ['저울 상품', '도축장', '용도', '판매종료', '위해 개체', '생산 등록', '가격 변경', '단축키 전송']
     }
   },
   methods: {
@@ -60,7 +60,7 @@ export default {
           const filterList = this.sendResultList.filter(items => items.scaleCode.includes(this.search));
           console.log(filterList)
           this.sendResultList = filterList;
-        }, 100);
+        });
       }else {
         clearTimeout(this.debounce);
         this.debounce = setTimeout(()=> {
@@ -71,28 +71,29 @@ export default {
   },
   created() {
     this.resultCall()
-  },
-  components: {
-    'Select' : Select
   }
 }
 </script>
 
 <style scoped>
+#select{
+  width: 120px;
+}
 #search{  
   position: absolute;
-  margin-right: 37px;
   margin-top: 20px;
-  margin-left: 10px;
+  margin-left: 37px;
 }
 .task{
   float: right;
-  margin: 20px 138px 0px 0px;
+  margin-right: 10px;
+  margin-top: 24px;
 }
 
 button {
-  margin-top: -37px;
+  margin-top: 24px;
   margin-right: 37px;
+  margin-bottom: 8px;
   float: right;
   background-color: #003366;
   color: white;

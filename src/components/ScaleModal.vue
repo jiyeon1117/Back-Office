@@ -6,10 +6,10 @@
         <input type="text" name="search" id="search" placeholder="Search (StrCode)" v-model="search" @input="SearchInput" @keydown.tab="KeydownTab">
         <table>
           <tr>
-            <th>저울코드</th>
-            <th>전송업무</th>
-            <th>전송여부</th>
-            <th>최종전송일시</th>
+            <th>저울 코드</th>
+            <th>전송 업무</th>
+            <th>전송 여부</th>
+            <th>최종 전송 일시</th>
           </tr>
           <tr v-for="i in sendResultList" :key="i.scaleCode">
           <td>{{i.scaleCode}}</td>

@@ -6,6 +6,16 @@ import Setting from '@/components/Setting'
 import Send from '@/components/Send'
 import Schedule from '@/components/Schedule'
 import ScaleModal from '@/components/ScaleModal'
+import ScheduleModal from '@/components/ScheduleModal'
+import VueRouter from 'vue-router'
+
+const origin = VueRouter.prototype.push;
+VueRouter.prototype.push =  function push(location) {
+  return origin.call(this, location).catch(() => {
+    return window.location.reload()
+  })
+}
+
 Vue.use(Router)
 
 export default new Router({
@@ -14,12 +24,17 @@ export default new Router({
     {
       path: '/',
       name: 'Scale',
-      component: Scale, ScaleModal
+      component: Scale
     },
     {
       path: '/Scale',
       name: 'Scale',
-      component: Scale, ScaleModal
+      component: Scale
+    },
+    {
+      path: '/ScaleModal',
+      name: 'ScaleModal',
+      component: ScaleModal
     },
     {
       path: '/Server',
@@ -41,5 +56,10 @@ export default new Router({
       name: 'Schedule',
       component: Schedule
     },
+    {
+      path: '/ScheduleModal',
+      name: 'ScheduleModal',
+      component: ScheduleModal
+    }
   ]
 })
