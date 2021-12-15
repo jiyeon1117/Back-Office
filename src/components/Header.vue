@@ -2,7 +2,7 @@
   <Header>
     <div class="Header">
       <button><img class="menu" :src="require(`@/assets/menu.png`)"/></button>
-      <button><img class="user" :src="require(`@/assets/user.png`)"/></button>
+      <router-link to='/User'><button><img class="user" :src="require(`@/assets/user.png`)"/></button></router-link>
     </div>
   </Header>
 </template>
@@ -33,7 +33,7 @@ button{
 }
 .user {
   display: block;
-  margin: auto 30px auto 0px;
+  margin: 25% 30px 25% 0px;
   width: 24px;
 }
 </style>
