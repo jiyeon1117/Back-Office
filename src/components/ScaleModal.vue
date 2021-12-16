@@ -1,7 +1,7 @@
 <template>
   <div class="black-bg" >
     <div class="white-bg">
-      <button><img :src="imgSrc" class="img"></button>
+      <button @click="hiddenModal()"><img :src="imgSrc" class="img"></button>
       <div class="box-title">전송 결과</div>
       <input type="text" name="search" id="search" placeholder="Search (StrCode)" v-model="search" @input="SearchInput" @keydown.tab="KeydownTab">
       <table>
@@ -24,11 +24,11 @@
 
 <script>
 import axios from 'axios'
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 export default {
   name: "SendResultList",
   computed :{
-    ...mapState(['smodal','smodalNum'])
+    ...mapState(['scaleModal','scaleCode'])
   },
   data(){
     return {
@@ -48,6 +48,9 @@ export default {
         this.sendResultList = res.data.data
       }).catch(res => {
       });
+    },
+    hiddenModal(){
+      this.$store.commit("SET_SCALE_MODAL", false);
     },
     SearchInput(e){
       this.search = e.target.value;

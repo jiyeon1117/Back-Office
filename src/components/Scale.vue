@@ -76,6 +76,13 @@ export default {
 
       });
     },
+    showModal(scaleCode){
+      console.log('scaleCode', scaleCode)
+      var scaleModal = []
+      scaleModal.scaleCode = scaleCode;
+      scaleModal.modalFlag = true;
+      this.$store.commit("SET_SCALE_MODAL", scaleModal);
+    },
     SearchInput(e){
       this.search = e.target.value;
       if(this.search.length !== 0){
@@ -109,22 +116,13 @@ export default {
         });
       }
     },
-    showModal(num){
-        console.log(num)
-        var sModal = []
-        sModal.num = num;
-        sModal.modalFlag = true;
-        this.$store.commit("SET_MODAL",sModal );
-   
-
-    },
     SectorInput(e){
       this.sector = e.target.value;
       console.log('SectorInput', this.sector);
       if(this.sector.length !== 0){
         clearTimeout(this.debounce);
         this.debounce = setTimeout(() => {
-          const filterList = this.scaleList.filter(items => items.scaleSectorCode == this.sector, items.strCode == this.store);
+          const filterList = this.scaleList.filter(items => items.scaleSectorCode == this.sector);
           console.log(filterList)
           this.scaleList = filterList;
         }, 100);

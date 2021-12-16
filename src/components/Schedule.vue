@@ -17,7 +17,7 @@
           <th>프로그램<br>실행종료 시각</th>
         </tr>
         <tr v-for="i in svrBatchList" :key="i.scaleSvrId">
-          <td><router-link to='/ScheduleModal'>{{i.scaleSvrId}}</router-link></td>
+          <td @click="showModal(i.scaleSvrId, i.scalePgmId)">{{i.scaleSvrId}}</td>
           <td>{{i.scalePgmId}}</td>
           <td>{{i.comnStatSendCycleVal}}</td>
           <td>{{i.allProScaleCntr}}</td>
@@ -55,6 +55,14 @@ export default {
       }).catch(res => {
 
       });
+    },
+    showModal(scaleSvrId, scalePgmId){
+      console.log('scaleSvrId : ', scaleSvrId, ' scalePgmId : ', scalePgmId);
+      var scheduleModal = []
+      scheduleModal.scaleSvrId = scaleSvrId;
+      scheduleModal.scalePgmId = scalePgmId;
+      scheduleModal.modalFlag = true;
+      this.$store.commit("SET_SCHEDULE_MODAL", scheduleModal);
     },
     SearchInput(e){
       this.search = e.target.value;

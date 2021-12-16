@@ -10,19 +10,26 @@ const store = new Vuex.Store({
   state: {
     scale: null,
     count: 0,
-    smodal : false,
-    smodalNum : 0
+    scaleModal : false,
+    scaleCode : 0,
+    scheduleModal : false,
+    scaleSvrId : "",
+    scalePgmId : 0
   },
   mutations: {
     SET_SCALE(state, payload){
       state.scale = payload.data
       state.count = payload.data.length
     },
-    SET_MODAL(state, payload){
-      state.smodal = payload.modalFlag
-      state.smodalNum = payload.num
+    SET_SCALE_MODAL(state, payload){
+      state.scaleModal = payload.modalFlag
+      state.scaleCode = payload.scaleCode
     },
-
+    SET_SCHEDULE_MODAL(state, payload){
+      state.scheduleModal = payload.modalFlag
+      state.scaleSvrId = payload.scaleSvrId
+      state.scalePgmId = payload.scalePgmId
+    },  
   },
   getters: {
     count(state, getters){

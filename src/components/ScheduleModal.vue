@@ -1,7 +1,7 @@
 <template>
-  <div class="black-bg" v-if="Modal == true">
+  <div class="black-bg">
       <div class="white-bg">
-        <button class="imgbtn" @click="Modal = false"><img :src="imgSrc" class="img"></button>
+        <button class="imgbtn" @click="hiddenModal()"><img :src="imgSrc" class="img"></button>
         <div class="box-title">스케쥴 설정</div>
 
         <div class="text Kor">저울코드 / 서버 프로그램</div>
@@ -28,12 +28,20 @@
 </template>
 <script>
 import Button from './piece/Button.vue'
+import { mapState } from 'vuex'
 export default {
+  computed :{
+    ...mapState(['scheduleModal','scaleSvrId', 'scalePgmId'])
+  },
   data(){
     return {
-      Modal : false,
       imgSrc : require('../assets/close.png')
     }
+  },
+  methods: {
+    hiddenModal(){
+      this.$store.commit("SET_SCHEDULE_MODAL", false);
+    },
   },
   components: {
     'Button' : Button
