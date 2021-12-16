@@ -31,7 +31,7 @@ import Button from './piece/Button.vue'
 export default {
   data(){
     return {
-      Modal : true,
+      Modal : false,
       imgSrc : require('../assets/close.png')
     }
   },

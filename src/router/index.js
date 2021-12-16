@@ -8,6 +8,8 @@ import Schedule from '@/components/Schedule'
 import ScaleModal from '@/components/ScaleModal'
 import ScheduleModal from '@/components/ScheduleModal'
 import User from '@/components/user'
+import Test from '@/components/Test'
+
 import VueRouter from 'vue-router'
 
 const origin = VueRouter.prototype.push;
@@ -35,7 +37,7 @@ export default new Router({
     {
       path: '/ScaleModal',
       name: 'ScaleModal',
-      component: ScaleModal
+      components: ScaleModal
     },
     {
       path: '/Server',
@@ -66,6 +68,11 @@ export default new Router({
       path: '/User',
       name: 'User',
       component: User
+    },
+    {
+      path: '/Test',
+      name: 'Test',
+      component: Test
     }
   ]
 })

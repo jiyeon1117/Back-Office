@@ -1,6 +1,5 @@
 <template>
-  <div>
-    
+  <div>  
     <div class="title Eng">Scale</div>
     <div class="Box">
       <div class="box-title">저울 통신 상태</div>
@@ -31,7 +30,8 @@
           <td>{{i.scaleIp}}</td>
           <td>{{i.scaleMhtpCode}}</td>
           <td>{{i.fwrVerNo == null ? 'X' : i.fwrVerNo}}</td>
-          <td><router-link to='/ScaleModal'>{{i.sendYn == '1' ? '성공': '실패'}}</router-link></td>
+          <td @click="showModal(i.scaleCode)">{{i.sendYn == '1' ? '성공': '실패'}}</td>
+          <!-- <td><router-link to='/ScaleModal'>{{i.sendYn == '1' ? '성공': '실패'}}</router-link></td> -->
           <!-- <td><router-link to="/ScaleModal" v-if="i.sendYn == '1' ? true : false">{{i.sendYn == '1' ? '전송 성공': 'X'}}</router-link></td> -->
           <td>{{i.scaleComnCmplYn == '1' ? '연결중' : '연결안됨'}}</td>
         </tr>
@@ -55,6 +55,9 @@ export default {
     }
   },
   watch:{
+    store(){
+      this.scaleCall()
+    },
     sector(){
       this.scaleCall()
     }
@@ -91,7 +94,7 @@ export default {
     },
     StoreInput(e){
       this.store = e.target.value;
-      console.log('SectorInput', this.sector);
+      console.log('StoreInput', this.store);
       if(this.store.length !== 0){
         clearTimeout(this.debounce);
         this.debounce = setTimeout(() => {
@@ -106,13 +109,22 @@ export default {
         });
       }
     },
+    showModal(num){
+        console.log(num)
+        var sModal = []
+        sModal.num = num;
+        sModal.modalFlag = true;
+        this.$store.commit("SET_MODAL",sModal );
+   
+
+    },
     SectorInput(e){
       this.sector = e.target.value;
       console.log('SectorInput', this.sector);
       if(this.sector.length !== 0){
         clearTimeout(this.debounce);
         this.debounce = setTimeout(() => {
-          const filterList = this.scaleList.filter(items => items.scaleSectorCode == this.sector);
+          const filterList = this.scaleList.filter(items => items.scaleSectorCode == this.sector, items.strCode == this.store);
           console.log(filterList)
           this.scaleList = filterList;
         }, 100);
