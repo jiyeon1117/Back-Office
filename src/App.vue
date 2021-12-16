@@ -3,6 +3,8 @@
     <Header></Header>
     <Menu></Menu>
     <Body></Body>
+    <ScaleModal v-if="smodal"></ScaleModal>
+    <ScheduleModal></ScheduleModal>
   </div>
 </template>
 
@@ -12,11 +14,15 @@ import Menu from './components/Menu.vue'
 import Body from './components/Body.vue'
 import ScaleModal from './components/ScaleModal.vue'
 import ScheduleModal from './components/ScheduleModal.vue'
-
+import { mapState } from 'vuex'
 export default {
   name: 'App',
+  computed :{
+      ...mapState(['smodal'])
+  },
   data(){
     return {
+
     }
   },
   components: {
@@ -76,7 +82,6 @@ table {
   width: 94%;
   height: 100%;
   table-layout: fixed;
-
   border-collapse: collapse;
   border-style: hidden;
   box-shadow: 0 0 0 1px #E1E7EE;
