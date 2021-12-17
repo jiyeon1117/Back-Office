@@ -105,9 +105,4 @@ th {
 td {
   font-size: 13pt;
 }
-
-.clickColor{
-  text-decoration: underline;
-  color: blue;
-}
 </style>

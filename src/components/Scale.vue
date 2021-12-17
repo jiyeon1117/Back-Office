@@ -5,10 +5,12 @@
       <div class="box-title">저울 통신 상태</div>
       <select class="store" id="store" v-model="store" @input="StoreInput" @change="StoreChange(this)">
         <option value="" selected disabled hidden>매장</option>
+        <option :value="all">전체</option>
         <option :value="i" v-for="i in storeFilter" :key="i">{{i}}</option>
       </select>
 
       <select class="sector" id="sector" v-model="sector" @input="SectorInput">
+        <option :value="all">전체</option>
         <option value="" selected disabled hidden>부문</option>
         <option :value="i" v-for="i in sectorFilter" :key="i">{{i}}</option>
       </select>
@@ -32,8 +34,6 @@
           <td>{{i.scaleMhtpCode}}</td>
           <td>{{i.fwrVerNo == null ? 'X' : i.fwrVerNo}}</td>
           <td class="clickColor" @click="showModal(i.scaleCode)">{{i.sendYn == '1' ? '성공': '실패'}}</td>
-          <!-- <td><router-link to='/ScaleModal'>{{i.sendYn == '1' ? '성공': '실패'}}</router-link></td> -->
-          <!-- <td><router-link to="/ScaleModal" v-if="i.sendYn == '1' ? true : false">{{i.sendYn == '1' ? '전송 성공': 'X'}}</router-link></td> -->
           <td>{{i.scaleComnCmplYn == '1' ? '연결중' : '연결안됨'}}</td>
         </tr>
       </table>
@@ -171,10 +171,5 @@ export default {
   margin-right: 37px;
   margin-top: 20px;
   float: right;
-}
-
-.clickColor{
-  text-decoration: underline;
-  color: blue;
 }
 </style>

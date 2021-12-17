@@ -160,7 +160,10 @@ select{
 input::placeholder {
   color: #557EA7;
 }
-a {
+
+.clickColor{
+  text-decoration: underline;
   color: blue;
+  cursor: pointer;
 }
 </style>
