@@ -5,9 +5,9 @@
       <div class="box-title">재전송 명령</div>
       <input type="text" name="search" id="search" placeholder="저울코드 검색" v-model="search" @input="SearchInput" @keydown.tab="KeydownTab">
       <div class="btn">
-        <button>Recent</button>
+        <button>재전송</button>
       </div>
-      <select name="select" id="select" class="task">
+      <select name="select" class="task">
         <!-- <option v-for="(i, index) in filterMenu" :key="index">{{i}}</option> -->
         <option>{{filterMenu}}</option>
       </select>
@@ -88,6 +88,7 @@ export default {
 }
 .task{
   float: right;
+  width: 115px;
   margin-right: 10px;
   margin-top: 24px;
 }
@@ -101,9 +102,10 @@ button {
   color: white;
   border: none;
   border-radius: 10px;
-  font-size: 18px;
+  font-size: 17px;
+  text-align: center;
   padding: 8px 16px 8px 16px;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 900;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 500;
 }
 </style>

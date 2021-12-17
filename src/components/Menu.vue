@@ -1,27 +1,16 @@
 <template>
   <div class="side-menu">
     <ul>
-      <router-link to="/Scale">
-        통신상태 확인
+      <router-link to="/Scale">통신상태 확인
         <li>저울 통신 상태</li>
       </router-link>
-      <li>
-        <router-link to="/Server">서버 통신 상태</router-link>
-      </li>
+      <li><router-link to="/Server">서버 통신 상태</router-link></li>
     </ul>
-    
-    <ul>
-      <router-link to="/Send">재전송 명령</router-link>
-    </ul>
-    <ul>
-      <router-link to="/Schedule">스케쥴 설정</router-link>
-    </ul>
-    <ul>
-      <router-link to="/Setting">
-        Setting
-        <li>DB 연결 정보</li>
-      </router-link>
-    </ul>
+    <ul><router-link to="/Send" >재전송 명령</router-link></ul>
+    <ul><router-link to="/Schedule" >스케쥴 설정</router-link></ul>
+    <ul><router-link to="/Setting">Setting
+      <li>DB 연결 정보</li>
+    </router-link></ul>
   </div>
 </template>
 
@@ -31,11 +20,19 @@ export default {
 </script>
 
 <style scoped>
+.router-link-active {
+  color: #003366;
+  font-weight: 900;
+}
+.router-link-active li{
+  color: #003366;
+  font-weight: 900;
+}
 .side-menu {
   float: left;
   margin: 0;
   margin-top: 15px;
-  width: 220px;
+  width: 230px;
   height: calc(100vh - 80px);
 }
 ul{

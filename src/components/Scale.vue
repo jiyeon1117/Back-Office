@@ -3,11 +3,12 @@
     <div class="title Eng">Scale</div>
     <div class="Box">
       <div class="box-title">저울 통신 상태</div>
-      <select class="store" id="select" v-model="store" @input="StoreInput">
+      <select class="store" id="store" v-model="store" @input="StoreInput" @change="StoreChange(this)">
         <option value="" selected disabled hidden>매장</option>
         <option :value="i" v-for="i in storeFilter" :key="i">{{i}}</option>
       </select>
-      <select class="sector" id="select" v-model="sector" @input="SectorInput">
+
+      <select class="sector" id="sector" v-model="sector" @input="SectorInput">
         <option value="" selected disabled hidden>부문</option>
         <option :value="i" v-for="i in sectorFilter" :key="i">{{i}}</option>
       </select>
@@ -82,6 +83,9 @@ export default {
       scaleModal.scaleCode = scaleCode;
       scaleModal.modalFlag = true;
       this.$store.commit("SET_SCALE_MODAL", scaleModal);
+    },
+    StoreChange(e){
+      var target = document.getElementById("sector");      
     },
     SearchInput(e){
       this.search = e.target.value;

@@ -3,7 +3,6 @@
     <div class="white-bg">
       <button @click="hiddenModal()"><img :src="imgSrc" class="img"></button>
       <div class="box-title">전송 결과</div>
-      <input type="text" name="search" id="search" placeholder="Search (StrCode)" v-model="search" @input="SearchInput" @keydown.tab="KeydownTab">
       <table>
         <tr>
           <th>저울 코드</th>
@@ -49,6 +48,10 @@ export default {
           const filter = this.sendResultList.filter(items => items.scaleCode == this.scaleCode);
           console.log('filter', filter);
           this.sendResultList = filter;
+          if(filter.length == 0){
+            console.log('filter 값이 없음', filter.length);
+            alert('상품 전송 결과가 없습니다.');
+          }
         }
       }).catch(res => {
 
@@ -82,11 +85,6 @@ export default {
 </script>
 
 <style scoped>
-#search{
-  float: right;
-  margin-top: -10px;
-  margin-right: 30px;
-}
 .box-title{
   margin-left: 30px;
   font-size: 26px;
@@ -125,7 +123,7 @@ button{
 }
 
 table {
-  margin: 10px 0px 0px 30px;
+  margin: 20px 0px 0px 30px;
   padding: 0 0px 0 0;
   width: 91%;
   height: 100%;

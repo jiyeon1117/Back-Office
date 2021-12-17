@@ -28,7 +28,6 @@ const store = new Vuex.Store({
     },
     SET_MENU(state, payload){
       state.menuBar = payload.bar
-      state.count = payload.cnt
     },
   },
   getters: {

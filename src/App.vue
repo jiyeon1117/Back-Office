@@ -24,9 +24,6 @@ export default {
     return {
     }
   },
-  methods: {
-
-  },
   components: {
     'Header' : Header,
     'Menu' : Menu,
@@ -39,7 +36,6 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap');
-
 body {
   margin: 0;
 }
@@ -133,9 +129,9 @@ td{
   border: 8px;
   padding: 10px;
 }
-#select{
+select{
   width: 100px;
-  height: 37px;
+  height: 39px;
   border: 2px solid #003366;
   border-radius: 10px;
   padding-left: 8px;

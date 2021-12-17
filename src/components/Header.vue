@@ -20,29 +20,14 @@ export default {
   },
   methods: {
     hiddenMenu() {
-      console.log('menuBar', this.menuBar);
-      this.$store.commit("SET_MENU", false);
-      // var menu = [];
-      // menu.cnt = counts;
-      // menu.bar = this.menuBar;
-      // console.log('menu', menu);
+      var menu = [];
+      menu.bar = this.menuBar;
 
-      // if(menu.cnt % 2 == 0){
-      //   this.menuBar = false;
-      //   console.log('클릭 menuBar', menu.bar);
-      //   this.$store.commit("SET_MENU", menu);
-      // } else if(menu.cnt % 2 == 1){
-      //   console.log('땡땡!');
-      // }
-      // var menu = []
-      // if(this.menuButton == true){
-      //   console.log('변경 전 menuButton', menu.button, 'menuBar', menu.bar)
-      //   menu.button = true;
-      //   menu.bar = false;
-      //   console.log('변경 후 menuButton', menu.button, 'menuBar', menu.bar)
-      //   this.$store.commit("SET_MENU", menu);
-      // }
-
+      if(menu.bar == true) menu.bar = false;
+      else menu.bar = true;
+      
+      this.$store.commit("SET_MENU", menu);
+      console.log('menuBar', menu);
     }
   }
 }
