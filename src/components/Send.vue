@@ -8,7 +8,8 @@
         <button>Recent</button>
       </div>
       <select name="select" id="select" class="task">
-        <option v-for="(i, index) in task" :key="index" :value="index">{{i}}</option>
+        <!-- <option v-for="(i, index) in filterMenu" :key="index">{{i}}</option> -->
+        <option>{{filterMenu}}</option>
       </select>
       <table>
         <tr>
@@ -19,7 +20,7 @@
         </tr>
         <tr v-for="i in sendResultList" :key="i.scaleCode">
           <td>{{i.scaleCode}}</td>
-          <td>{{i.sendTaskCode != null ? task[parseInt(i.sendTaskCode)-1] : 'X'}}</td>
+          <td>{{i.sendTaskCode != null ? filterMenu = task[parseInt(i.sendTaskCode)-1] : 'X'}}</td>
           <td>{{i.sendYn == '1' ? '성공': '실패'}}</td>
           <td>{{i.fnlSendDt}}</td>
         </tr>
@@ -37,6 +38,7 @@ export default {
     return{
       sendResultList : [],
       search: "",
+      filterMenu: [],
       task: ['저울 상품', '도축장', '용도', '판매종료', '위해 개체', '생산 등록', '가격 변경', '단축키 전송']
     }
   },

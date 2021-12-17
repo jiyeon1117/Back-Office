@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header></Header>
-    <Menu></Menu>
+    <Menu v-if="menuBar"></Menu>
     <Body></Body>
     <ScaleModal v-if="scaleModal"></ScaleModal>
     <ScheduleModal v-if="scheduleModal"></ScheduleModal>
@@ -18,11 +18,14 @@ import { mapState } from 'vuex'
 export default {
   name: 'App',
   computed :{
-      ...mapState(['scaleModal', 'scheduleModal'])
+      ...mapState(['scaleModal', 'scheduleModal', 'menuBar'])
   },
   data(){
     return {
     }
+  },
+  methods: {
+
   },
   components: {
     'Header' : Header,

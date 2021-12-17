@@ -2,16 +2,24 @@
   <div class="side-menu">
     <ul>
       <router-link to="/Scale">
-      통신상태 확인
-      <li>저울 통신 상태</li>
+        통신상태 확인
+        <li>저울 통신 상태</li>
       </router-link>
-      <li><router-link to="/Server">서버 통신 상태</router-link></li>
+      <li>
+        <router-link to="/Server">서버 통신 상태</router-link>
+      </li>
     </ul>
-    <ul><router-link to="/Send">재전송 명령</router-link></ul>
-    <ul><router-link to="/Schedule">스케쥴 설정</router-link></ul>
+    
     <ul>
-      <router-link to="/Setting">Setting
-      <li>DB 연결 정보</li>
+      <router-link to="/Send">재전송 명령</router-link>
+    </ul>
+    <ul>
+      <router-link to="/Schedule">스케쥴 설정</router-link>
+    </ul>
+    <ul>
+      <router-link to="/Setting">
+        Setting
+        <li>DB 연결 정보</li>
       </router-link>
     </ul>
   </div>
@@ -19,7 +27,6 @@
 
 <script>
 export default {
-  
 }
 </script>
 

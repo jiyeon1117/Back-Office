@@ -30,7 +30,7 @@
           <td>{{i.scaleIp}}</td>
           <td>{{i.scaleMhtpCode}}</td>
           <td>{{i.fwrVerNo == null ? 'X' : i.fwrVerNo}}</td>
-          <td @click="showModal(i.scaleCode)">{{i.sendYn == '1' ? '성공': '실패'}}</td>
+          <td class="clickColor" @click="showModal(i.scaleCode)">{{i.sendYn == '1' ? '성공': '실패'}}</td>
           <!-- <td><router-link to='/ScaleModal'>{{i.sendYn == '1' ? '성공': '실패'}}</router-link></td> -->
           <!-- <td><router-link to="/ScaleModal" v-if="i.sendYn == '1' ? true : false">{{i.sendYn == '1' ? '전송 성공': 'X'}}</router-link></td> -->
           <td>{{i.scaleComnCmplYn == '1' ? '연결중' : '연결안됨'}}</td>
@@ -73,7 +73,7 @@ export default {
         console.log('scaleCall', this.scaleList)
         this.StoreFilter(); this.SectorFilter();
       }).catch(res => {
-
+        alert('DB 연결이 끊어졌습니다.')
       });
     },
     showModal(scaleCode){
@@ -89,7 +89,6 @@ export default {
         clearTimeout(this.debounce);
         this.debounce = setTimeout(() => {
           const filterList = this.scaleList.filter(items => items.scaleCode.includes(this.search));
-          console.log(filterList)
           this.scaleList = filterList;
         }, 100);
       }else {
@@ -168,5 +167,10 @@ export default {
   margin-right: 37px;
   margin-top: 20px;
   float: right;
+}
+
+.clickColor{
+  text-decoration: underline;
+  color: blue;
 }
 </style>

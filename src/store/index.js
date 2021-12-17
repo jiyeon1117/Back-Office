@@ -8,19 +8,15 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   strict: false,
   state: {
-    scale: null,
     count: 0,
     scaleModal : false,
     scaleCode : 0,
     scheduleModal : false,
     scaleSvrId : "",
-    scalePgmId : 0
+    scalePgmId : 0,
+    menuBar: true
   },
   mutations: {
-    SET_SCALE(state, payload){
-      state.scale = payload.data
-      state.count = payload.data.length
-    },
     SET_SCALE_MODAL(state, payload){
       state.scaleModal = payload.modalFlag
       state.scaleCode = payload.scaleCode
@@ -29,7 +25,11 @@ const store = new Vuex.Store({
       state.scheduleModal = payload.modalFlag
       state.scaleSvrId = payload.scaleSvrId
       state.scalePgmId = payload.scalePgmId
-    },  
+    },
+    SET_MENU(state, payload){
+      state.menuBar = payload.bar
+      state.count = payload.cnt
+    },
   },
   getters: {
     count(state, getters){

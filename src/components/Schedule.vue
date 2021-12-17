@@ -17,7 +17,7 @@
           <th>프로그램<br>실행종료 시각</th>
         </tr>
         <tr v-for="i in svrBatchList" :key="i.scaleSvrId">
-          <td @click="showModal(i.scaleSvrId, i.scalePgmId)">{{i.scaleSvrId}}</td>
+          <td class="clickColor" @click="showModal(i.scaleSvrId, i.scalePgmId)">{{i.scaleSvrId}}</td>
           <td>{{i.scalePgmId}}</td>
           <td>{{i.comnStatSendCycleVal}}</td>
           <td>{{i.allProScaleCntr}}</td>
@@ -104,5 +104,10 @@ th {
 }
 td {
   font-size: 13pt;
+}
+
+.clickColor{
+  text-decoration: underline;
+  color: blue;
 }
 </style>

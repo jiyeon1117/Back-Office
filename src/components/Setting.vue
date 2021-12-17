@@ -6,25 +6,51 @@
       <div class="btn">
         <button>Edit</button>
       </div>
-      <div class="group">
-        <div class="text">기본 작업 DB IP</div>
-        <input type="text" name="ip" class="input ip" placeholder="ip">
+      <div  v-for="i in settingList" :key="i.scaleSvrId">
+        <div class="group">
+          <div class="text">기본 작업 DB IP</div>
+          <input type="text" name="ip" class="input ip" placeholder="ip" :value="i.scaleSvrIp">
+        </div>
+        <div class="group">
+          <div class="text after">기본 작업 DB PORT</div>
+          <input type="text" name="port" class="input port" placeholder="port" :value="i.scaleSvrPortNo">
+        </div>
+        <div class="group">
+          <div class="text after">기본 작업 DB 접속 명령</div>
+          <input type="text" name="Command" class="input command" placeholder="command">
+        </div>
       </div>
-      <div class="group">
-        <div class="text after">기본 작업 DB PORT</div>
-        <input type="text" name="port" class="input port" placeholder="port">
-      </div>
-      <div class="group">
-        <div class="text after">기본 작업 DB 접속 명령</div>
-        <input type="text" name="Command" class="input command" placeholder="command">
-      </div>
+      
     </div>
   </div>
 </template>
 
 <script>
-export default {
+import axios from 'axios'
 
+export default {
+  name: "SettingList",
+  data(){
+    return{
+      settingList : []
+    }
+  },
+  methods: {
+    settingCall() {
+      axios({
+        url: "http://172.16.18.116:8080/scaleSvr",
+        method: "GET"
+      }).then(res => {
+        console.log(res.data.data)
+        this.settingList = res.data.data
+      }).catch(res => {
+
+      });
+    },
+  },
+  created() {
+    this.settingCall()
+  },
 }
 </script>
 

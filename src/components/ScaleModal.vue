@@ -44,9 +44,14 @@ export default {
         url: "http://172.16.18.116:8080/scaleSendResult?size=0",
         method: "GET"
       }).then(res => {
-        console.log(res.data.data)
         this.sendResultList = res.data.data
+        if(this.sendResultList){
+          const filter = this.sendResultList.filter(items => items.scaleCode == this.scaleCode);
+          console.log('filter', filter);
+          this.sendResultList = filter;
+        }
       }).catch(res => {
+
       });
     },
     hiddenModal(){
@@ -68,7 +73,6 @@ export default {
         });
       }
     }
-
   },
   created() {
     this.ResultListCall()
@@ -121,10 +125,9 @@ button{
 }
 
 table {
-  display: inline-block;
   margin: 10px 0px 0px 30px;
   padding: 0 0px 0 0;
-  width: 92%;
+  width: 91%;
   height: 100%;
   table-layout: fixed;
   border-collapse: collapse;
