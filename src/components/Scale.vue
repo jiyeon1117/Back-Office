@@ -3,16 +3,14 @@
     <div class="title Eng">Scale</div>
     <div class="Box">
       <div class="box-title">저울 통신 상태</div>
-      <select class="store" id="store" v-model="store" @input="StoreInput" @change="StoreChange(this)">
-        <option value="" selected disabled hidden>매장</option>
-        <option :value="all">전체</option>
+      <select class="store" id="store" v-model="store" @input="StoreInput" @change="StoreChange('store')">
+        <option value="" selected>매장</option>
         <option :value="i" v-for="i in storeFilter" :key="i">{{i}}</option>
       </select>
+      <select class="sector" id="sector" v-model="sector"  @change="StoreChange('department')">
+        <option value="" selected>부문</option>
+        <option v-for="i in departmentList" :value="i.id" :key="i.id">{{i.name}}</option>
 
-      <select class="sector" id="sector" v-model="sector" @input="SectorInput">
-        <option :value="all">전체</option>
-        <option value="" selected disabled hidden>부문</option>
-        <option :value="i" v-for="i in sectorFilter" :key="i">{{i}}</option>
       </select>
       <input type="text" name="search" id="search" placeholder="저울코드" v-model="search" @input="SearchInput" @keydown.tab="KeydownTab">
       <table>
@@ -26,7 +24,7 @@
           <th>상품 전송 결과</th>
           <th>통신 연결 상태</th>
         </tr>
-        <tr v-for="i in scaleList" :key="i.scaleCode">
+        <tr v-for="i in tableList" :key="i.scaleCode">
           <td>{{i.strCode}}</td>
           <td>{{i.scaleSectorCode}}</td>
           <td>{{i.scaleCode}}</td>
@@ -37,6 +35,15 @@
           <td>{{i.scaleComnCmplYn == '1' ? '연결중' : '연결안됨'}}</td>
         </tr>
       </table>
+      <div class="btn-cover">
+        <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">
+          이전
+        </button>
+        <span class="page-count">{{ pageNum + 1 }} / {{ pageCount }} 페이지</span>
+        <button :disabled="pageNum >= pageCount - 1" @click="nextPage" class="page-btn">
+          다음
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -44,26 +51,47 @@
 <script>
 import Select from './piece/Select.vue'
 import axios from 'axios'
+import _ from 'lodash'
 
 export default {
   name: "ScaleList",
   data(){
     return{
       scaleList : [],
+      tableList: [],
+      filterData :[],
       search: "", store: "", sector: "",
-      storeList: [], storeFilter: [],
-      sectorList: [], sectorFilter: []
+      storeList: [], storeFilter: [], 
+      sectorFilter: [],
+      departmentList :[], 
+      pageArray: [],
+      pageNum: 0,
+      listArray: {
+        type: Array,
+        required: true
+      },
+      pageSize: 5
     }
   },
-  watch:{
-    store(){
-      this.scaleCall()
-    },
-    sector(){
-      this.scaleCall()
+  computed: {
+    pageCount() {
+      console.log(this.tableList.length)
+      let listLeng = this.filterData.length,
+          listSize = this.pageSize,
+          page = Math.floor(listLeng/listSize);
+
+      if(listLeng % listSize > 0) page += 1;
+ 
+      return page;
     }
+   
   },
   methods: {
+     paginatedData() {
+      const start = this.pageNum * this.pageSize,
+      end = start + this.pageSize;
+      this.tableList =  this.filterData.slice(start, end);
+    },
     scaleCall() {
       axios({
         url: "http://172.16.18.116:8080/scale",
@@ -71,11 +99,30 @@ export default {
       }).then(res => {
         console.log(res.data.data)
         this.scaleList = res.data.data;
+        this.tableList = this.scaleList;
+        this.filterData =  this.tableList
         console.log('scaleCall', this.scaleList)
-        this.StoreFilter(); this.SectorFilter();
+        this.StoreFilter();
+        var lodashList =[];
+        lodashList = _.uniqBy(this.tableList, "scaleSectorCode");
+        this.departmentList =[];
+        for(var i =  0 ; i< lodashList.length ;i++){
+          var object = {id :lodashList[i].scaleSectorCode , name : lodashList[i].scaleSectorCode} ;
+          this.departmentList.push(object);
+        }
+        this.paginatedData();
       }).catch(res => {
         alert('DB 연결이 끊어졌습니다.')
       });
+    },
+    nextPage () {
+      this.pageNum += 1;
+      this.paginatedData();
+    },
+    prevPage () {
+      this.pageNum -= 1;
+      this.paginatedData();
+    
     },
     showModal(scaleCode){
       console.log('scaleCode', scaleCode)
@@ -84,8 +131,61 @@ export default {
       scaleModal.modalFlag = true;
       this.$store.commit("SET_SCALE_MODAL", scaleModal);
     },
-    StoreChange(e){
-      var target = document.getElementById("sector");      
+    StoreChange(type){
+      if(type == 'store'){
+        this.sector = "";
+        this.tableList = this.scaleList.filter(items => items.strCode == this.store);
+        var lodashList =[];
+        lodashList = _.uniqBy(this.tableList, "scaleSectorCode");
+        this.departmentList =[];
+        for(var i =  0 ; i< lodashList.length ;i++){
+          var object = {id :lodashList[i].scaleSectorCode , name : lodashList[i].scaleSectorCode} ;
+          this.departmentList.push(object);
+        }
+        console.log(this.departmentList)
+      }
+
+
+      if(type == 'department'){
+        if(this.store == ""){
+          if (this.sector == "" ){
+            this.tableList = this.scaleList
+          }else{
+            this.tableList = this.scaleList.filter(items => items.scaleSectorCode == this.sector);
+          }
+        }else{
+           if (this.sector == "" ){
+              this.tableList = this.scaleList.filter(items => items.strCode == this.store);
+           }else{
+              this.tableList = this.scaleList.filter(items => items.scaleSectorCode == this.sector && items.strCode == this.store);
+           }
+        }
+      
+         
+      }
+
+  
+      if (   this.pageNum >= this.pageCount){
+        this.pageNum = 0;
+      }
+      this.filterData =  this.tableList
+/*
+      var target = document.getElementById("sector");
+      console.log('StoreChange', storeCode);
+     
+      console.log('sectorFilter', this.sectorFilter)
+
+      target.options.length = 1;
+
+      for(var x in this.sectorFilter){
+        var opt = document.createElement("option");
+        opt.value = this.sectorFilter[x];
+        opt.innerHTML = this.sectorFilter[x];
+        target.appendChild(opt);
+      }
+      this.scaleList = this.tableList;
+      */
+      
     },
     SearchInput(e){
       this.search = e.target.value;
@@ -110,7 +210,7 @@ export default {
         this.debounce = setTimeout(() => {
           const filterList = this.scaleList.filter(items => items.strCode == this.store);
           console.log(filterList)
-          this.scaleList = filterList;
+          this.tableList = filterList;
         }, 100);
       }else {
         clearTimeout(this.debounce);
@@ -118,16 +218,16 @@ export default {
           this.scaleCall()
         });
       }
-    },
+    },/*
     SectorInput(e){
       this.sector = e.target.value;
       console.log('SectorInput', this.sector);
       if(this.sector.length !== 0){
         clearTimeout(this.debounce);
         this.debounce = setTimeout(() => {
-          const filterList = this.scaleList.filter(items => items.scaleSectorCode == this.sector);
+          const filterList = this.scaleList.filter(items => items.scaleSectorCode == this.sector );
           console.log(filterList)
-          this.scaleList = filterList;
+          this.tableList = filterList;
         }, 100);
       }else {
         clearTimeout(this.debounce);
@@ -135,27 +235,18 @@ export default {
           this.scaleCall()
         });
       }
-    },
+    },*/
     StoreFilter(){
       this.storeList = [];
       for(var i in this.scaleList){
         this.storeList.push(this.scaleList[i].strCode)
-        this.storeFilter = this.storeList.filter((element, index) =>
-          this.storeList.indexOf(element) === index
-      )}
+      }
+      this.storeFilter = this.storeList.filter((element, index) =>
+        this.storeList.indexOf(element) === index
+      )
       console.log('StoreFilter',this.storeList, this.storeFilter.sort())
       return this.storeFilter.sort();
     },
-    SectorFilter(){
-      this.sectorList = [];
-      for(var i in this.scaleList){
-        this.sectorList.push(this.scaleList[i].scaleSectorCode)
-        this.sectorFilter = this.sectorList.filter((element, index) =>
-          this.sectorList.indexOf(element) === index
-      )}
-      console.log('SectorFilter',this.sectorList, this.sectorFilter.sort())
-      return this.sectorFilter.sort();
-    }
   },
   created() {
     this.scaleCall()

@@ -8,7 +8,6 @@
         <button>재전송</button>
       </div>
       <select name="select" class="task">
-        <!-- <option v-for="(i, index) in filterMenu" :key="index">{{i}}</option> -->
         <option>{{filterMenu}}</option>
       </select>
       <table>
@@ -21,7 +20,7 @@
         <tr v-for="i in sendResultList" :key="i.scaleCode">
           <td>{{i.scaleCode}}</td>
           <td>{{i.sendTaskCode != null ? filterMenu = task[parseInt(i.sendTaskCode)-1] : 'X'}}</td>
-          <td>{{i.sendYn == '1' ? '성공': '실패'}}</td>
+          <td>{{i.sendYn}}</td>
           <td>{{i.fnlSendDt}}</td>
         </tr>
       </table>
