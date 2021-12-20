@@ -7,12 +7,11 @@
         <option value="" selected>매장</option>
         <option :value="i" v-for="i in storeFilter" :key="i">{{i}}</option>
       </select>
-      <select class="sector" id="sector" v-model="sector"  @change="StoreChange('department')">
+      <select class="sector" id="sector" v-model="sector" @change="StoreChange('department')">
         <option value="" selected>부문</option>
         <option v-for="i in departmentList" :value="i.id" :key="i.id">{{i.name}}</option>
-
       </select>
-      <input type="text" name="search" id="search" placeholder="저울코드" v-model="search" @input="SearchInput" @keydown.tab="KeydownTab">
+      <input type="text" name="search" id="search" placeholder="저울코드" v-model="search" @input="SearchInput" @change="StoreChange('search')">
       <table>
         <tr>
           <th>매장</th>
@@ -61,33 +60,23 @@ export default {
       tableList: [],
       filterData :[],
       search: "", store: "", sector: "",
-      storeList: [], storeFilter: [], 
-      sectorFilter: [],
-      departmentList :[], 
-      pageArray: [],
+      storeList: [], storeFilter: [],
+      departmentList :[],
       pageNum: 0,
-      listArray: {
-        type: Array,
-        required: true
-      },
       pageSize: 5
     }
   },
   computed: {
     pageCount() {
-      console.log(this.tableList.length)
       let listLeng = this.filterData.length,
           listSize = this.pageSize,
           page = Math.floor(listLeng/listSize);
-
       if(listLeng % listSize > 0) page += 1;
- 
       return page;
     }
-   
   },
   methods: {
-     paginatedData() {
+    paginatedData() {
       const start = this.pageNum * this.pageSize,
       end = start + this.pageSize;
       this.tableList =  this.filterData.slice(start, end);
@@ -97,12 +86,12 @@ export default {
         url: "http://172.16.18.116:8080/scale",
         method: "GET"
       }).then(res => {
-        console.log(res.data.data)
         this.scaleList = res.data.data;
         this.tableList = this.scaleList;
-        this.filterData =  this.tableList
+        this.filterData = this.tableList;
         console.log('scaleCall', this.scaleList)
         this.StoreFilter();
+        
         var lodashList =[];
         lodashList = _.uniqBy(this.tableList, "scaleSectorCode");
         this.departmentList =[];
@@ -110,6 +99,7 @@ export default {
           var object = {id :lodashList[i].scaleSectorCode , name : lodashList[i].scaleSectorCode} ;
           this.departmentList.push(object);
         }
+
         this.paginatedData();
       }).catch(res => {
         alert('DB 연결이 끊어졌습니다.')
@@ -122,7 +112,6 @@ export default {
     prevPage () {
       this.pageNum -= 1;
       this.paginatedData();
-    
     },
     showModal(scaleCode){
       console.log('scaleCode', scaleCode)
@@ -145,7 +134,6 @@ export default {
         console.log(this.departmentList)
       }
 
-
       if(type == 'department'){
         if(this.store == ""){
           if (this.sector == "" ){
@@ -160,46 +148,50 @@ export default {
               this.tableList = this.scaleList.filter(items => items.scaleSectorCode == this.sector && items.strCode == this.store);
            }
         }
-      
-         
       }
 
-  
-      if (   this.pageNum >= this.pageCount){
+      if(type == 'search'){
+        if(this.store == ""){
+          if (this.sector == "" ){
+            if(this.search == ""){
+              this.tableList = this.scaleList;
+            }else{
+              this.tableList = this.scaleList.filter(items => items.scaleCode.includes(this.search))
+            }
+          }
+        }else{
+          if(this.sector == ""){
+            if(this.search = ""){
+              this.tableList = this.scaleList;
+            }else{
+              this.tableList = this.scaleList.filter(items => items.strCode == this.store && items.scaleCode.includes(this.search));
+            }
+          }else{
+            if(this.search = ""){
+              this.tableList = this.scaleList;
+            }else{
+              this.tableList = this.scaleList.filter(items => items.scaleSectorCode == this.sector && items.strCode == this.store && items.scaleCode.includes(this.search));
+            }
+          }
+        }
+      }
+
+      if(this.pageNum >= this.pageCount){
         this.pageNum = 0;
       }
-      this.filterData =  this.tableList
-/*
-      var target = document.getElementById("sector");
-      console.log('StoreChange', storeCode);
-     
-      console.log('sectorFilter', this.sectorFilter)
-
-      target.options.length = 1;
-
-      for(var x in this.sectorFilter){
-        var opt = document.createElement("option");
-        opt.value = this.sectorFilter[x];
-        opt.innerHTML = this.sectorFilter[x];
-        target.appendChild(opt);
-      }
-      this.scaleList = this.tableList;
-      */
-      
+      this.filterData =  this.tableList;      
     },
     SearchInput(e){
       this.search = e.target.value;
+      console.log('SearchInput', this.search);
       if(this.search.length !== 0){
-        clearTimeout(this.debounce);
-        this.debounce = setTimeout(() => {
-          const filterList = this.scaleList.filter(items => items.scaleCode.includes(this.search));
-          this.scaleList = filterList;
-        }, 100);
+        const filterList = this.tableList.filter(items => items.scaleCode.includes(this.search));
+        console.log('SearchInput filterList ', filterList)
+        this.tableList = filterList;
       }else {
-        clearTimeout(this.debounce);
-        this.debounce = setTimeout(()=> {
-          this.scaleCall()
-        });
+        this.store = "";
+        this.sector = "";
+        this.scaleCall();
       }
     },
     StoreInput(e){
@@ -218,24 +210,7 @@ export default {
           this.scaleCall()
         });
       }
-    },/*
-    SectorInput(e){
-      this.sector = e.target.value;
-      console.log('SectorInput', this.sector);
-      if(this.sector.length !== 0){
-        clearTimeout(this.debounce);
-        this.debounce = setTimeout(() => {
-          const filterList = this.scaleList.filter(items => items.scaleSectorCode == this.sector );
-          console.log(filterList)
-          this.tableList = filterList;
-        }, 100);
-      }else {
-        clearTimeout(this.debounce);
-        this.debounce = setTimeout(()=> {
-          this.scaleCall()
-        });
-      }
-    },*/
+    },
     StoreFilter(){
       this.storeList = [];
       for(var i in this.scaleList){
