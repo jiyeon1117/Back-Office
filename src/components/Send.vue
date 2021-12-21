@@ -19,15 +19,14 @@
           <th>전송여부</th>
           <th>최종전송일시</th>
         </tr>
-        <tr v-for="i in sendResultList" :key="i.scaleCode">
-          <td><input type="checkbox" v-model="i.checkbox" @click="select" :value="i.checkbox"/></td>
+        <tr v-for="(i, index) in sendResultList" :key="i.scaleCode">
+          <td><input type="checkbox" v-model="i.checkbox" @click="select(index)" :value="i.checkbox"/></td>
           <td>{{i.scaleCode}}</td>
           <td>{{i.sendTaskCode != null ? filterMenu = task[parseInt(i.sendTaskCode)-1] : 'X'}}</td>
           <td>{{i.sendYn}}</td>
           <td>{{i.chgDt == "" ? '...' : i.chgDt}}</td>
         </tr>
       </table>
-      <span>Select : {{checkbox}}</span>
     </div>
   </div>
 </template>
@@ -44,7 +43,8 @@ export default {
       filterMenu: [],
       task: ['저울 상품', '도축장', '용도', '판매종료', '위해 개체', '생산 등록', '가격 변경', '단축키 전송'],
       checkbox : [],
-      allSelected: false
+      allSelected: false,
+      checkList: []
     }
   },
   methods: {
@@ -76,17 +76,18 @@ export default {
       });
     },
     resultData() {
-      // var dataResult =  this.sendResultList.filter(items => items.cincludes(this.search)); 
+      var dataResult = this.sendResultList.filter(items => items.checkbox == true); 
+      console.log('dataResult', dataResult)
       axios({
         url: "http://172.16.18.116:8080/scaleSendResult/send",
         method: "POST",
-        data: this.sendResultList
+        data: dataResult
       }).then(res => {
         console.log('resultData', res.data.data);
         this.resultCall();
-        setTimeout(()=>{
-          this.resendData();
-        }, 3000)
+        // setTimeout(()=>{
+        //   this.resendData();
+        // }, 3000)
       }).catch(res => {
 
       });
@@ -110,8 +111,11 @@ export default {
     },
     selectAll(){
       this.checkbox = [];
-      if(this.allSelected == true) this.allSelected = false;
-      else this.allSelected = true;
+      if(this.allSelected == true){
+        this.allSelected = false;
+      }else{
+        this.allSelected = true;
+      } 
 
       console.log('this.allSelected', this.allSelected)
       if(this.allSelected){
@@ -121,12 +125,15 @@ export default {
         };
         console.log('true  this.checkbox', this.checkbox)
       }else{
-        this.allSelected = false;
+        for(var i in this.sendResultList){
+          this.sendResultList[i].checkbox = false;
+          this.checkbox.push(this.sendResultList[i].checkbox);
+        };
         console.log('false this.checkbox', this.checkbox)
       }
     },
-    select(){
-      this.allSelected = false;
+    select(index){
+      this.sendResultList[index].checkbox = !this.sendResultList[index].checkbox;
     }
   },
   created() {

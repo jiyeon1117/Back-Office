@@ -44,6 +44,11 @@ export default {
       search: ""
     }
   },
+  watch: {
+    showModal(){
+      this.batchCall();
+    }
+  },
   methods: {
     batchCall(){
       axios({
