@@ -13,8 +13,8 @@
         <tr v-for="(i, index) in sendResultList" :key="index">
           <td>{{i.scaleCode}}</td>
           <td>{{i.sendTaskCode != null ? task[parseInt(i.sendTaskCode)-1] : 'X'}}</td>
-          <td>{{i.sendYn == '1' ? '성공': '실패'}}</td>
-          <td>{{i.fnlSendDt}}</td>
+          <td>{{i.sendYn}}</td>
+          <td>{{i.chgDt == "" ? '...' : i.chgDt}}</td>
         </tr>
       </table>
     </div>

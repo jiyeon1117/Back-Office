@@ -3,13 +3,14 @@
     <div class="title Kor">재전송 명령</div>
     <div class="Box">
       <div class="box-title">재전송 명령</div>
-      <input type="text" name="search" id="search" placeholder="저울코드 검색" v-model="search" @input="SearchInput" @keydown.tab="KeydownTab">
-      <div class="btn">
-        <button :click="resultData()">재전송</button>
-      </div>
-      <select name="select" class="task">
+      <select class="store" name="select">
         <option>{{filterMenu}}</option>
       </select>
+      <input type="text" name="search" id="search" placeholder="저울코드 검색" v-model="search" @input="SearchInput" @keydown.tab="KeydownTab">
+      <div class="btn" >
+        <button @click="resultData()">재전송</button>
+      </div>
+      
       <table>
         <tr>
           <th><input type="checkbox" @click="selectAll" v-model="allSelected"/></th>
@@ -23,10 +24,10 @@
           <td>{{i.scaleCode}}</td>
           <td>{{i.sendTaskCode != null ? filterMenu = task[parseInt(i.sendTaskCode)-1] : 'X'}}</td>
           <td>{{i.sendYn}}</td>
-          <td>{{i.chgDt}}</td>
+          <td>{{i.chgDt == "" ? '...' : i.chgDt}}</td>
         </tr>
       </table>
-      <span>Select : {{scaleCodes}}</span>
+      <span>Select : {{checkbox}}</span>
     </div>
   </div>
 </template>
@@ -42,14 +43,8 @@ export default {
       search: "",
       filterMenu: [],
       task: ['저울 상품', '도축장', '용도', '판매종료', '위해 개체', '생산 등록', '가격 변경', '단축키 전송'],
-      scaleCodes : [], 
-      selected: [],
+      checkbox : [],
       allSelected: false
-    }
-  },
-  watch:{
-    resendData() {
-      this.resultData()
     }
   },
   methods: {
@@ -68,16 +63,30 @@ export default {
 
       });
     },
+    resendData() {
+      axios({
+        url: "http://172.16.18.116:8080/scaleSendResult/updateDate",
+        method: "POST",
+        data: this.sendResultList
+      }).then(res => {
+        console.log('resendData', res.data.data)
+        this.resultCall();
+      }).catch(res => {
+
+      });
+    },
     resultData() {
-
       // var dataResult =  this.sendResultList.filter(items => items.cincludes(this.search)); 
-
       axios({
         url: "http://172.16.18.116:8080/scaleSendResult/send",
         method: "POST",
         data: this.sendResultList
       }).then(res => {
-        console.log('resultData', res.data.data)
+        console.log('resultData', res.data.data);
+        this.resultCall();
+        setTimeout(()=>{
+          this.resendData();
+        }, 3000)
       }).catch(res => {
 
       });
@@ -86,6 +95,7 @@ export default {
       this.search = e.target.value;
       if(this.search.length !== 0){
         clearTimeout(this.debounce);
+
         this.debounce = setTimeout(() => {
           const filterList = this.sendResultList.filter(items => items.scaleCode.includes(this.search));
           console.log(filterList)
@@ -99,14 +109,20 @@ export default {
       }
     },
     selectAll(){
-      this.scaleCodes = [];
+      this.checkbox = [];
       if(this.allSelected == true) this.allSelected = false;
       else this.allSelected = true;
 
+      console.log('this.allSelected', this.allSelected)
       if(this.allSelected){
         for(var i in this.sendResultList){
-          this.scaleCodes.push(this.sendResultList[i].scaleCode);
+          this.sendResultList[i].checkbox = true;
+          this.checkbox.push(this.sendResultList[i].checkbox);
         };
+        console.log('true  this.checkbox', this.checkbox)
+      }else{
+        this.allSelected = false;
+        console.log('false this.checkbox', this.checkbox)
       }
     },
     select(){
@@ -120,25 +136,19 @@ export default {
 </script>
 
 <style scoped>
-#select{
-  width: 120px;
-}
-#search{  
+#search{
   position: absolute;
   margin-top: 20px;
-  margin-left: 37px;
 }
-.task{
-  float: right;
+.store{
   width: 115px;
   margin-right: 10px;
-  margin-top: 24px;
 }
 
 button {
-  margin-top: 24px;
+  margin: -38px;
   margin-right: 37px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   cursor: pointer;
   float: right;
   background-color: #003366;
