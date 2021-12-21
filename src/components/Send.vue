@@ -12,18 +12,21 @@
       </select>
       <table>
         <tr>
+          <th><input type="checkbox" @click="selectAll" v-model="allSelected"/></th>
           <th>저울코드</th>
           <th>전송업무코드</th>
           <th>전송여부</th>
           <th>최종전송일시</th>
         </tr>
         <tr v-for="i in sendResultList" :key="i.scaleCode">
+          <td><input type="checkbox" v-model="scaleCodes" @click="select" :value="i.scaleCode"/></td>
           <td>{{i.scaleCode}}</td>
           <td>{{i.sendTaskCode != null ? filterMenu = task[parseInt(i.sendTaskCode)-1] : 'X'}}</td>
           <td>{{i.sendYn}}</td>
           <td>{{i.fnlSendDt}}</td>
         </tr>
       </table>
+      <span>Select : {{scaleCodes}}</span>
     </div>
   </div>
 </template>
@@ -38,7 +41,10 @@ export default {
       sendResultList : [],
       search: "",
       filterMenu: [],
-      task: ['저울 상품', '도축장', '용도', '판매종료', '위해 개체', '생산 등록', '가격 변경', '단축키 전송']
+      task: ['저울 상품', '도축장', '용도', '판매종료', '위해 개체', '생산 등록', '가격 변경', '단축키 전송'],
+      scaleCodes : [], 
+      selected: [],
+      allSelected: false
     }
   },
   methods: {
@@ -68,6 +74,20 @@ export default {
           this.resultCall()
         });
       }
+    },
+    selectAll(){
+      this.scaleCodes = [];
+      if(this.allSelected == true) this.allSelected = false;
+      else this.allSelected = true;
+
+      if(this.allSelected){
+        for(var i in this.sendResultList){
+          this.scaleCodes.push(this.sendResultList[i].scaleCode);
+        };
+      }
+    },
+    select(){
+      this.allSelected = false;
     }
   },
   created() {
