@@ -5,7 +5,7 @@
       <div class="box-title">재전송 명령</div>
       <input type="text" name="search" id="search" placeholder="저울코드 검색" v-model="search" @input="SearchInput" @keydown.tab="KeydownTab">
       <div class="btn">
-        <button>재전송</button>
+        <button :click="resultData()">재전송</button>
       </div>
       <select name="select" class="task">
         <option>{{filterMenu}}</option>
@@ -19,11 +19,11 @@
           <th>최종전송일시</th>
         </tr>
         <tr v-for="i in sendResultList" :key="i.scaleCode">
-          <td><input type="checkbox" v-model="scaleCodes" @click="select" :value="i.scaleCode"/></td>
+          <td><input type="checkbox" v-model="i.checkbox" @click="select" :value="i.checkbox"/></td>
           <td>{{i.scaleCode}}</td>
           <td>{{i.sendTaskCode != null ? filterMenu = task[parseInt(i.sendTaskCode)-1] : 'X'}}</td>
           <td>{{i.sendYn}}</td>
-          <td>{{i.fnlSendDt}}</td>
+          <td>{{i.chgDt}}</td>
         </tr>
       </table>
       <span>Select : {{scaleCodes}}</span>
@@ -47,6 +47,11 @@ export default {
       allSelected: false
     }
   },
+  watch:{
+    resendData() {
+      this.resultData()
+    }
+  },
   methods: {
     resultCall() {
       axios({
@@ -54,7 +59,25 @@ export default {
         method: "GET"
       }).then(res => {
         console.log(res.data.data)
+        for (var i in res.data.data){
+          res.data.data[i].checkbox = false;
+        }
         this.sendResultList = res.data.data
+        console.log(this.sendResultList)
+      }).catch(res => {
+
+      });
+    },
+    resultData() {
+
+      // var dataResult =  this.sendResultList.filter(items => items.cincludes(this.search)); 
+
+      axios({
+        url: "http://172.16.18.116:8080/scaleSendResult/send",
+        method: "POST",
+        data: this.sendResultList
+      }).then(res => {
+        console.log('resultData', res.data.data)
       }).catch(res => {
 
       });
@@ -116,6 +139,7 @@ button {
   margin-top: 24px;
   margin-right: 37px;
   margin-bottom: 8px;
+  cursor: pointer;
   float: right;
   background-color: #003366;
   color: white;
