@@ -3,11 +3,11 @@
     <div class="title Eng">Scale</div>
     <div class="Box">
       <div class="box-title">저울 통신 상태</div>
-      <select class="store" id="store" v-model="store" @input="StoreInput" @change="StoreChange('store')">
+      <select class="store" v-model="store" @input="StoreInput" @change="StoreChange('store')">
         <option value="" selected>매장</option>
         <option :value="i" v-for="i in storeFilter" :key="i">{{i}}</option>
       </select>
-      <select class="sector" id="sector" v-model="sector" @change="StoreChange('department')">
+      <select class="sector" v-model="sector" @change="StoreChange('department')">
         <option value="" selected>부문</option>
         <option v-for="i in departmentList" :value="i.id" :key="i.id">{{i.name}}</option>
       </select>
@@ -34,14 +34,10 @@
           <td>{{i.scaleComnCmplYn == '1' ? '연결중' : '연결안됨'}}</td>
         </tr>
       </table>
-      <div class="btn-cover">
-        <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">
-          이전
-        </button>
-        <span class="page-count">{{ pageNum + 1 }} / {{ pageCount }} 페이지</span>
-        <button :disabled="pageNum >= pageCount - 1" @click="nextPage" class="page-btn">
-          다음
-        </button>
+      <div class="pagaBtn">
+        <button :disabled="pageNum === 0" @click="prevPage"><img class="left" :src="require(`@/assets/arrow-left.png`)"/></button>
+        <span class="page-count">{{ pageNum + 1 }} / {{ pageCount }} page</span>
+        <button :disabled="pageNum >= pageCount - 1" @click="nextPage"><img class="right" :src="require(`@/assets/arrow-right.png`)"/></button>
       </div>
     </div>
   </div>
@@ -62,8 +58,7 @@ export default {
       search: "", store: "", sector: "",
       storeList: [], storeFilter: [],
       departmentList :[],
-      pageNum: 0,
-      pageSize: 5
+      pageNum: 0, pageSize: 5
     }
   },
   computed: {
@@ -78,7 +73,7 @@ export default {
   methods: {
     paginatedData() {
       const start = this.pageNum * this.pageSize,
-      end = start + this.pageSize;
+            end = start + this.pageSize;
       this.tableList =  this.filterData.slice(start, end);
     },
     scaleCall() {
@@ -89,17 +84,17 @@ export default {
         this.scaleList = res.data.data;
         this.tableList = this.scaleList;
         this.filterData = this.tableList;
+
         console.log('scaleCall', this.scaleList)
         this.StoreFilter();
         
         var lodashList =[];
         lodashList = _.uniqBy(this.tableList, "scaleSectorCode");
-        this.departmentList =[];
-        for(var i =  0 ; i< lodashList.length ;i++){
-          var object = {id :lodashList[i].scaleSectorCode , name : lodashList[i].scaleSectorCode} ;
+        this.departmentList = [];
+        for(var i=0 ; i<lodashList.length; i++){
+          var object = {id : lodashList[i].scaleSectorCode, name : lodashList[i].scaleSectorCode} ;
           this.departmentList.push(object);
         }
-
         this.paginatedData();
       }).catch(res => {
         alert('DB 연결이 끊어졌습니다.')
@@ -115,7 +110,7 @@ export default {
     },
     showModal(scaleCode){
       console.log('scaleCode', scaleCode)
-      var scaleModal = []
+      var scaleModal = [];
       scaleModal.scaleCode = scaleCode;
       scaleModal.modalFlag = true;
       this.$store.commit("SET_SCALE_MODAL", scaleModal);
@@ -127,47 +122,47 @@ export default {
         var lodashList =[];
         lodashList = _.uniqBy(this.tableList, "scaleSectorCode");
         this.departmentList =[];
-        for(var i =  0 ; i< lodashList.length ;i++){
-          var object = {id :lodashList[i].scaleSectorCode , name : lodashList[i].scaleSectorCode} ;
+        for(var i=0; i<lodashList.length; i++){
+          var object = {id : lodashList[i].scaleSectorCode, name : lodashList[i].scaleSectorCode};
           this.departmentList.push(object);
         }
-        console.log(this.departmentList)
+        console.log(this.departmentList);
       }
 
       if(type == 'department'){
         if(this.store == ""){
-          if (this.sector == "" ){
-            this.tableList = this.scaleList
+          if(this.sector == ""){
+            this.tableList = this.scaleList;
           }else{
             this.tableList = this.scaleList.filter(items => items.scaleSectorCode == this.sector);
           }
         }else{
-           if (this.sector == "" ){
-              this.tableList = this.scaleList.filter(items => items.strCode == this.store);
-           }else{
-              this.tableList = this.scaleList.filter(items => items.scaleSectorCode == this.sector && items.strCode == this.store);
-           }
+          if(this.sector == ""){
+            this.tableList = this.scaleList.filter(items => items.strCode == this.store);
+          }else{
+            this.tableList = this.scaleList.filter(items => items.scaleSectorCode == this.sector && items.strCode == this.store);
+          }
         }
       }
 
       if(type == 'search'){
         if(this.store == ""){
-          if (this.sector == "" ){
+          if(this.sector == ""){
             if(this.search == ""){
               this.tableList = this.scaleList;
             }else{
-              this.tableList = this.scaleList.filter(items => items.scaleCode.includes(this.search))
+              this.tableList = this.scaleList.filter(items => items.scaleCode.includes(this.search));
             }
           }
         }else{
           if(this.sector == ""){
-            if(this.search = ""){
+            if(this.search == ""){
               this.tableList = this.scaleList;
             }else{
               this.tableList = this.scaleList.filter(items => items.strCode == this.store && items.scaleCode.includes(this.search));
             }
           }else{
-            if(this.search = ""){
+            if(this.search == ""){
               this.tableList = this.scaleList;
             }else{
               this.tableList = this.scaleList.filter(items => items.scaleSectorCode == this.sector && items.strCode == this.store && items.scaleCode.includes(this.search));
@@ -179,7 +174,8 @@ export default {
       if(this.pageNum >= this.pageCount){
         this.pageNum = 0;
       }
-      this.filterData =  this.tableList;      
+
+      this.filterData = this.tableList;      
     },
     SearchInput(e){
       this.search = e.target.value;
@@ -198,33 +194,25 @@ export default {
       this.store = e.target.value;
       console.log('StoreInput', this.store);
       if(this.store.length !== 0){
-        clearTimeout(this.debounce);
-        this.debounce = setTimeout(() => {
-          const filterList = this.scaleList.filter(items => items.strCode == this.store);
-          console.log(filterList)
-          this.tableList = filterList;
-        }, 100);
+        const filterList = this.scaleList.filter(items => items.strCode == this.store);
+        console.log(filterList);
+        this.tableList = filterList;
       }else {
-        clearTimeout(this.debounce);
-        this.debounce = setTimeout(()=> {
-          this.scaleCall()
-        });
+        this.scaleCall();
       }
     },
     StoreFilter(){
       this.storeList = [];
       for(var i in this.scaleList){
-        this.storeList.push(this.scaleList[i].strCode)
+        this.storeList.push(this.scaleList[i].strCode);
       }
-      this.storeFilter = this.storeList.filter((element, index) =>
-        this.storeList.indexOf(element) === index
-      )
-      console.log('StoreFilter',this.storeList, this.storeFilter.sort())
-      return this.storeFilter.sort();
+      this.storeFilter = this.storeList.filter((element, index) => this.storeList.indexOf(element) === index).sort();
+      console.log('StoreFilter', this.storeFilter);
+      return this.storeFilter;
     },
   },
   created() {
-    this.scaleCall()
+    this.scaleCall();
   },
   components: {
     'Select' : Select
@@ -237,5 +225,27 @@ export default {
   margin-right: 37px;
   margin-top: 20px;
   float: right;
+}
+.pagaBtn{
+  display: flex;
+  margin-top: 30px;
+  align-items: center;
+  justify-content: center;
+}
+.page-count{
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+}
+button{
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+img{
+  margin-left: 12px;
+  margin-right: 12px;
+  margin-top: 5px;
+  width: 19px;
 }
 </style>

@@ -13,7 +13,7 @@
         <tr v-for="i in serverList" :key="i.scaleSvrId">
           <td>{{i.scaleSvrId}}</td>
           <td>{{i.scaleSvrIp}}</td>
-          <td>동작여부</td>
+          <td>{{i.workYn == '1' ? '정상' : '비정상'}}</td>
         </tr>
       </table>
     </div>
@@ -37,7 +37,6 @@ export default {
         url: "http://172.16.18.116:8080/scaleSvr",
         method: "GET"
       }).then(res => {
-        console.log(res.data.data)
         this.serverList = res.data.data
       }).catch(res => {
 
@@ -45,20 +44,15 @@ export default {
     },
     SearchInput(e){
       this.search = e.target.value;
+      console.log('SearchInput', this.search);
       if(this.search.length !== 0){
-        clearTimeout(this.debounce);
-        this.debounce = setTimeout(() => {
-          const filterList = this.serverList.filter(items => items.scaleSvrId.includes(this.search));
-          console.log(filterList)
-          this.serverList = filterList;
-        }, 100);
+        const filterList = this.serverList.filter(items => items.scaleSvrId.includes(this.search));
+        console.log('SearchInput filterList : ', filterList)
+        this.serverList = filterList;
       }else {
-        clearTimeout(this.debounce);
-        this.debounce = setTimeout(()=> {
-          this.scaleCall()
-        });
+        this.serverCall();
       }
-    }
+    },
   },
   created() {
     this.serverCall()
