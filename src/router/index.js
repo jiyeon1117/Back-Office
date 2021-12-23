@@ -7,7 +7,7 @@ import Send from '@/components/Send'
 import Schedule from '@/components/Schedule'
 import ScaleModal from '@/components/ScaleModal'
 import ScheduleModal from '@/components/ScheduleModal'
-import User from '@/components/user'
+import Login from '@/components/user'
 import Test from '@/components/Test'
 
 import VueRouter from 'vue-router'
@@ -65,9 +65,9 @@ export default new Router({
       component: ScheduleModal
     },
     {
-      path: '/User',
-      name: 'User',
-      component: User
+      path: '/Login',
+      name: 'Login',
+      component: Login
     },
     {
       path: '/Test',

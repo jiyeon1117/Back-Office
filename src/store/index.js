@@ -14,7 +14,8 @@ const store = new Vuex.Store({
     scheduleModal : false,
     scaleSvrId : "",
     scalePgmId : 0,
-    menuBar: true
+    menuBar: true,
+    login : true
   },
   mutations: {
     SET_SCALE_MODAL(state, payload){
@@ -29,6 +30,9 @@ const store = new Vuex.Store({
     SET_MENU(state, payload){
       state.menuBar = payload.bar
     },
+    SET_LOGIN(state, payload){
+      state.login = payload.loginYn
+    }
   },
   getters: {
     count(state, getters){

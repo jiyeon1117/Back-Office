@@ -3,6 +3,7 @@
     <Header></Header>
     <Menu v-if="menuBar"></Menu>
     <Body></Body>
+    <User v-if="login"></User>
     <ScaleModal v-if="scaleModal"></ScaleModal>
     <ScheduleModal v-if="scheduleModal"></ScheduleModal>
   </div>
@@ -14,20 +15,26 @@ import Menu from './components/Menu.vue'
 import Body from './components/Body.vue'
 import ScaleModal from './components/ScaleModal.vue'
 import ScheduleModal from './components/ScheduleModal.vue'
+import User from './components/user.vue'
+
 import { mapState } from 'vuex'
 export default {
   name: 'App',
   computed :{
-      ...mapState(['scaleModal', 'scheduleModal', 'menuBar'])
+      ...mapState(['scaleModal', 'scheduleModal', 'menuBar', 'login'])
   },
   data(){
     return {
     }
   },
+  methods: {
+
+  },
   components: {
     'Header' : Header,
     'Menu' : Menu,
     'Body' : Body,
+    'User' : User,
     'ScaleModal' : ScaleModal,
     'ScheduleModal' : ScheduleModal
   }

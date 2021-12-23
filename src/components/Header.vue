@@ -2,7 +2,7 @@
   <Header>
     <div class="Header">
       <button @click="hiddenMenu()"><img class="menu" :src="require(`@/assets/menu.png`)"/></button>
-      <router-link to='/User'><button><img class="user" :src="require(`@/assets/user.png`)"/></button></router-link>
+      <button><img class="user" :src="require(`@/assets/user.png`)"/></button>
     </div>
   </Header>
 </template>

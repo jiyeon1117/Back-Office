@@ -45,7 +45,7 @@ export default {
     }
   },
   watch: {
-    showModal(){
+    batchCall(){
       this.batchCall();
     }
   },
