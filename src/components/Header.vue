@@ -2,7 +2,7 @@
   <Header>
     <div class="Header">
       <button @click="hiddenMenu()"><img class="menu" :src="require(`@/assets/menu.png`)"/></button>
-      <button><img class="user" :src="require(`@/assets/user.png`)"/></button>
+      <button @click="logout()"><img class="user" :src="require(`@/assets/user.png`)"/></button>
     </div>
   </Header>
 </template>
@@ -16,7 +16,7 @@ export default {
     }
   },
   computed :{
-    ...mapState(['menuBar'])
+    ...mapState(['menuBar', 'login'])
   },
   methods: {
     hiddenMenu() {
@@ -28,6 +28,20 @@ export default {
       
       this.$store.commit("SET_MENU", menu);
       console.log('menuBar', menu);
+    },
+    logout(){
+      if(confirm("로그아웃 하시겠습니까?") == true){
+        console.log('로그아웃');
+        this.$router.push('/');
+        var user = [];
+        user.loginYn = this.login;
+        user.loginYn = true;
+        
+        this.$store.commit("SET_LOGIN", user);
+
+      }else {
+        return false;
+      }
     }
   }
 }

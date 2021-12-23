@@ -26,8 +26,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Scale',
-      component: Scale
+      name: 'Login',
+      component: Login
     },
     {
       path: '/Scale',

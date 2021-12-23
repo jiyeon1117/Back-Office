@@ -4,22 +4,20 @@
     <div class="Box">
       <div class="box-title">DB 연결 정보</div>
       <div class="btn">
-        <button>Edit</button>
+        <button @click="saveData()">Edit</button>
       </div>
-      <div  v-for="i in settingList" :key="i.scaleSvrId">
         <div class="group">
           <div class="text">기본 작업 DB IP</div>
-          <input type="text" name="ip" class="input ip" placeholder="ip" :value="i.scaleSvrIp">
+          <input type="text" v-model="ip" class="input ip" placeholder="ip">
         </div>
         <div class="group">
           <div class="text after">기본 작업 DB PORT</div>
-          <input type="text" name="port" class="input port" placeholder="port" :value="i.scaleSvrPortNo">
+          <input type="text" v-model="port" class="input port" placeholder="port">
         </div>
         <div class="group">
           <div class="text after">기본 작업 DB 접속 명령</div>
-          <input type="text" name="Command" class="input command" placeholder="command">
+          <input type="text" v-model="command" class="input command" placeholder="command">
         </div>
-      </div>
       
     </div>
   </div>
@@ -32,7 +30,11 @@ export default {
   name: "SettingList",
   data(){
     return{
-      settingList : []
+      settingList : [],
+      list : [],
+      ip : "",
+      port : "",
+      command : ""
     }
   },
   methods: {
@@ -42,11 +44,20 @@ export default {
         method: "GET"
       }).then(res => {
         console.log(res.data.data)
-        this.settingList = res.data.data
+        this.settingList = res.data.data;
+        this.ip = localStorage.getItem('ip');
+        this.port = localStorage.getItem('port');
+        this.command = localStorage.getItem('command');
       }).catch(res => {
 
       });
     },
+    saveData(){
+      localStorage.ip = this.ip;
+      localStorage.port = this.port;
+      localStorage.command = this.command;
+      console.log(this.ip, this.port, this.command)
+    }
   },
   created() {
     this.settingCall()
@@ -59,6 +70,7 @@ export default {
   height: 360px;
 }
 button {
+  cursor: pointer;
   margin-top: -40px;
   margin-right: 37px;
   float: right;
