@@ -21,11 +21,11 @@
         <div class="text Kor">프로그램 최종 실행 일시</div>
         <input type="text" v-model="form.pgmFnlExecDt" placeholder="프로그램 최종 실행 일시">
         
-        <div class="text Kor">프로그램 실행시작 시각</div>
-        <input type="text" v-model="form.pgmExecStartTm" placeholder="프로그램 실행시작 시각">
+        <div class="text Kor">프로그램 실행 시작 시각</div>
+        <input type="text" v-model="form.pgmExecStartTm" placeholder="프로그램 실행 시작 시각">
 
-        <div class="text Kor">프로그램 실행종료 시각</div>
-        <input type="text" v-model="form.pgmExecEndTm" placeholder="프로그램 실행종료 시각">
+        <div class="text Kor">프로그램 실행 종료 시각</div>
+        <input type="text" v-model="form.pgmExecEndTm" placeholder="프로그램 실행 종료 시각">
         
         <button class="modalbtn apply" @click="submit()">확인</button>
         <button class="modalbtn cancle" @click="hiddenModal()">취소</button>
@@ -36,8 +36,8 @@
 <script>
 import Button from './piece/Button.vue'
 import axios from 'axios'
-
 import { mapState } from 'vuex'
+
 export default {
   computed :{
     ...mapState(['scheduleModal','scaleSvrId', 'scalePgmId'])
@@ -76,16 +76,13 @@ export default {
     batchPost(){
       axios.put('http://172.16.18.116:8080/scaleSvrBatch', this.form)
         .then((res) => {
-            console.log(res)
+          console.log(res)
         })
         .catch((err) => {
-            console.log(err)
+          console.log(err)
         });
     },
   },
-  // created() {
-  //   this.batchPost();
-  // },
   components: {
     'Button' : Button
   }

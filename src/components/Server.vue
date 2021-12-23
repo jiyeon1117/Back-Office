@@ -86,8 +86,6 @@ export default {
   },
   created() {
     this.serverCall()
-  },
-  components: {
   }
 }
 </script>

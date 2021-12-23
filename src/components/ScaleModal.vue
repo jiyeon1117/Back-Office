@@ -24,6 +24,7 @@
 <script>
 import axios from 'axios'
 import { mapState } from 'vuex'
+
 export default {
   name: "SendResultList",
   computed :{
@@ -79,7 +80,6 @@ export default {
   },
   created() {
     this.ResultListCall()
-    // alert(this.smodalNum)
   }
 }
 </script>

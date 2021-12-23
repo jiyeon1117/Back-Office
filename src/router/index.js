@@ -8,7 +8,6 @@ import Schedule from '@/components/Schedule'
 import ScaleModal from '@/components/ScaleModal'
 import ScheduleModal from '@/components/ScheduleModal'
 import Login from '@/components/user'
-import Test from '@/components/Test'
 
 import VueRouter from 'vue-router'
 
@@ -68,11 +67,6 @@ export default new Router({
       path: '/Login',
       name: 'Login',
       component: Login
-    },
-    {
-      path: '/Test',
-      name: 'Test',
-      component: Test
     }
   ]
 })

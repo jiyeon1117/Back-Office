@@ -35,9 +35,13 @@
 <script>
 import Select from './piece/Select.vue'
 import axios from 'axios'
+import { mapState } from 'vuex'
 
 export default {
   name: "SvrBatchList",
+  computed :{
+    ...mapState(['scheduleModal'])
+  },
   data() {
     return{
       svrBatchList : [],
@@ -45,7 +49,8 @@ export default {
     }
   },
   watch: {
-    batchCall(){
+    scheduleModal(){
+      console.log("감지됨?")
       this.batchCall();
     }
   },
@@ -58,7 +63,7 @@ export default {
         console.log(res.data.data)
         this.svrBatchList = res.data.data
       }).catch(res => {
-
+        
       });
     },
     showModal(scaleSvrId, scalePgmId){
