@@ -41,6 +41,7 @@ export default {
           if(res.status == 200){ 
             console.log(res);
             this.$router.push('/Scale');
+            this.$store.commit("SET_LOGIN", this.login);
           }
         })
         .catch((err) => {
