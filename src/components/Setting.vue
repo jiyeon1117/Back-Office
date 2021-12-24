@@ -57,6 +57,7 @@ export default {
       localStorage.port = this.port;
       localStorage.command = this.command;
       console.log(this.ip, this.port, this.command)
+      alert('DB 정보가 저장되었습니다.')
     }
   },
   created() {

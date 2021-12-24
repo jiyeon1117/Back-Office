@@ -1,11 +1,9 @@
-<template class="back">
+<template>
   <div class="black-bg">
     <div class="white-bg">
       <div class="box-title">Login</div>
-
       <input type="text" v-model="form.email" class="id" placeholder="Email">
-      <input type="text" v-model="form.userPwd" placeholder="PASSWORD">
-
+      <input type="password" v-model="form.userPwd" placeholder="PASSWORD" @keyup.enter="submit()">
       <button class="login" @click="submit()">Login</button>
     </div>
   </div>
@@ -52,7 +50,7 @@ export default {
     clearData(){
       this.form.email = "";
       this.form.userPwd = "";
-    }
+    },
   },
 }
 </script>
@@ -60,10 +58,8 @@ export default {
 <style scoped>
 .black-bg{
   width: 100%;
-  height: 100%;
-  
+  height: 100%;  
   background-color: #F3F9FF;
-  /* background-color: transparent; */
 }
 
 .box-title{
@@ -80,13 +76,6 @@ export default {
   width: 460px;
   height: 410px;
 }
-
-/* .Kor {
-  margin-top: 25px;
-  margin-left: 30px;
-  font-size: 20px;
-  font-weight: 300;
-} */
 
 input{
   width: 330px;
