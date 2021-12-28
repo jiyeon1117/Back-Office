@@ -1,7 +1,7 @@
 <template>
   <div>  
     <div class="title Eng">Scale</div>
-    <div class="Box col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+    <div class="Box">
       <div class="box-title">저울 통신 상태</div>
       <select class="store" v-model="store" @input="StoreInput" @change="StoreChange('store')">
         <option value="" selected>매장</option>
@@ -34,7 +34,7 @@
           <td>{{i.scaleComnCmplYn == '1' ? '연결중' : '연결안됨'}}</td>
         </tr>
       </table>
-      <div class="pagaBtn">
+      <div class="pageBtn">
         <button :disabled="pageNum === 0" @click="prevPage"><img class="left" :src="require(`@/assets/arrow-left.png`)"/></button>
         <span class="page-count">{{ pageNum + 1 }} / {{ pageCount }} page</span>
         <button :disabled="pageNum >= pageCount - 1" @click="nextPage"><img class="right" :src="require(`@/assets/arrow-right.png`)"/></button>
@@ -230,7 +230,7 @@ export default {
   margin-top: 20px;
   float: right;
 }
-.pagaBtn{
+.pageBtn{
   display: flex;
   margin-top: 30px;
   align-items: center;

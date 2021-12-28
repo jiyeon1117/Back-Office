@@ -138,7 +138,7 @@ td{
 }
 select{
   width: 100px;
-  height: 39px;
+  height: 41px;
   border: 2px solid #003366;
   border-radius: 10px;
   padding-left: 8px;
@@ -160,7 +160,7 @@ select{
 
   font-family: 'Noto Sans KR', sans-serif;
   font-weight: 500;
-  font-size: 17px;
+  font-size: 16px;
   outline: none;
   padding-left: 8px;
 }
