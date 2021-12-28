@@ -1,7 +1,7 @@
 <template>
   <div>  
     <div class="title Eng">Scale</div>
-    <div class="Box">
+    <div class="Box col-xs-12 col-sm-12 col-md-12 col-lg-12" >
       <div class="box-title">저울 통신 상태</div>
       <select class="store" v-model="store" @input="StoreInput" @change="StoreChange('store')">
         <option value="" selected>매장</option>
@@ -15,20 +15,20 @@
       <table>
         <tr>
           <th>매장</th>
-          <th>부문</th>
+          <th v-if="!mobile">부문</th>
           <th>저울 코드</th>
           <th>IP</th>
-          <th>모델명</th>
+          <th v-if="!mobile">모델명</th>
           <th>저울 버전</th>
           <th>상품 전송 결과</th>
           <th>통신 연결 상태</th>
         </tr>
         <tr v-for="i in tableList" :key="i.scaleCode">
           <td>{{i.strCode}}</td>
-          <td>{{i.scaleSectorCode}}</td>
+          <td v-if="!mobile">{{i.scaleSectorCode}}</td>
           <td>{{i.scaleCode}}</td>
           <td>{{i.scaleIp}}</td>
-          <td>{{i.scaleMhtpCode}}</td>
+          <td v-if="!mobile">{{i.scaleMhtpCode}}</td>
           <td>{{i.fwrVerNo == null ? 'X' : i.fwrVerNo}}</td>
           <td class="clickColor" @click="showModal(i.scaleCode)">{{i.sendYn == '1' ? '성공': '실패'}}</td>
           <td>{{i.scaleComnCmplYn == '1' ? '연결중' : '연결안됨'}}</td>
@@ -58,7 +58,8 @@ export default {
       search: "", store: "", sector: "",
       storeList: [], storeFilter: [],
       departmentList :[],
-      pageNum: 0, pageSize: 5
+      pageNum: 0, pageSize: 5,
+      mobile : false
     }
   },
   computed: {
@@ -213,6 +214,9 @@ export default {
   },
   created() {
     this.scaleCall();
+    // if (window.innerWidth < 758){
+    //   this.mobile = true 
+    // }
   },
   components: {
     'Select' : Select

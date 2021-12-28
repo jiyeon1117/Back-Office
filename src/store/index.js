@@ -15,7 +15,14 @@ const store = new Vuex.Store({
     scaleSvrId : "",
     scalePgmId : 0,
     menuBar: true,
-    login : true
+    login : true,
+    comnStatSendCycleVal : "", 
+    allProScaleCntr : "", 
+    comnStatDefStartTm : "", 
+    comnStatDefEndTm : "", 
+    pgmFnlExecDt : "", 
+    pgmExecStartTm : "", 
+    pgmExecEndTm : ""
   },
   mutations: {
     SET_SCALE_MODAL(state, payload){
@@ -26,6 +33,13 @@ const store = new Vuex.Store({
       state.scheduleModal = payload.modalFlag
       state.scaleSvrId = payload.scaleSvrId
       state.scalePgmId = payload.scalePgmId
+      // state.comnStatSendCycleVal = payload.comnStatSendCycleVal
+      // state.allProScaleCntr = payload.allProScaleCntr
+      // state.comnStatDefStartTm = payload.comnStatDefStartTm
+      // state.comnStatDefEndTm = payload.comnStatDefEndTm
+      // state.pgmFnlExecDt = payload.pgmFnlExecDt
+      // state.pgmExecStartTm = payload.pgmExecStartTm
+      // state.pgmExecEndTm = payload.pgmExecEndTm
     },
     SET_MENU(state, payload){
       state.menuBar = payload.bar

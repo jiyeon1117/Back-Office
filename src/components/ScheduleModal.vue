@@ -18,9 +18,6 @@
         <div class="text Kor">통신 상태 확인 종료 시각</div>
         <input type="text" v-model="form.comnStatDefEndTm" placeholder="통신상태 종료 확인 시각">
         
-        <div class="text Kor">프로그램 최종 실행 일시</div>
-        <input type="text" v-model="form.pgmFnlExecDt" placeholder="프로그램 최종 실행 일시">
-        
         <div class="text Kor">프로그램 실행 시작 시각</div>
         <input type="text" v-model="form.pgmExecStartTm" placeholder="프로그램 실행 시작 시각">
 
@@ -66,6 +63,7 @@ export default {
       console.log('allProScaleCntr', this.form.allProScaleCntr);
       console.log('comnStatDefStartTm', this.form.comnStatDefStartTm);
       console.log('comnStatDefEndTm', this.form.comnStatDefEndTm);
+      this.form.pgmFnlExecDt = "23:00:00";
       console.log('pgmFnlExecDt', this.form.pgmFnlExecDt);
       console.log('pgmExecStartTm', this.form.pgmExecStartTm);
       console.log('pgmExecEndTm', this.form.pgmExecEndTm);
@@ -98,7 +96,7 @@ export default {
 .white-bg{
   border-radius: 10px;
   width: 532px;
-  height: 1000px;
+  height: 900px;
 }
 
 .Kor {

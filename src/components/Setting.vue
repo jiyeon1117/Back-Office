@@ -3,22 +3,19 @@
     <div class="title Eng">Setting</div>
     <div class="Box">
       <div class="box-title">DB 연결 정보</div>
-      <div class="btn">
-        <button @click="saveData()">Edit</button>
+      <button @click="saveData()">Edit</button>
+      <div class="group">
+        <div class="text">기본 작업 DB IP</div>
+        <input type="text" v-model="ip" class="input ip" placeholder="ip">
       </div>
-        <div class="group">
-          <div class="text">기본 작업 DB IP</div>
-          <input type="text" v-model="ip" class="input ip" placeholder="ip">
-        </div>
-        <div class="group">
-          <div class="text after">기본 작업 DB PORT</div>
-          <input type="text" v-model="port" class="input port" placeholder="port">
-        </div>
-        <div class="group">
-          <div class="text after">기본 작업 DB 접속 명령</div>
-          <input type="text" v-model="command" class="input command" placeholder="command">
-        </div>
-      
+      <div class="group">
+        <div class="text after">기본 작업 DB PORT</div>
+        <input type="text" v-model="port" class="input port" placeholder="port">
+      </div>
+      <div class="group">
+        <div class="text after">기본 작업 DB 접속 명령</div>
+        <input type="text" v-model="command" class="input command" placeholder="command">
+      </div>
     </div>
   </div>
 </template>

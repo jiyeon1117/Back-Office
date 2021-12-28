@@ -4,13 +4,11 @@
     <div class="Box">
       <div class="box-title">재전송 명령</div>
       <select class="store" name="select">
+        <option value="" selected>전체</option>
         <option>{{filterMenu}}</option>
       </select>
       <input type="text" name="search" id="search" placeholder="저울코드 검색" v-model="search" @input="SearchInput" @keydown.tab="KeydownTab">
-      <div class="btn" >
-        <button @click="resultData()">재전송</button>
-      </div>
-      
+      <button class="button" @click="resultData()">재전송</button>
       <table>
         <tr>
           <th><input type="checkbox" @click="selectAll" v-model="allSelected"/></th>
@@ -152,6 +150,9 @@ export default {
   margin-right: 10px;
 }
 
+.button{
+  margin-top: 18px;
+}
 button {
   margin: -38px;
   margin-right: 37px;

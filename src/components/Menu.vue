@@ -33,9 +33,9 @@ export default {
 .side-menu {
   float: left;
   margin: 0;
-  margin-top: 15px;
+  margin-top: 10px;
   width: 230px;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 90px);
 }
 ul{
   font-size: 24px;

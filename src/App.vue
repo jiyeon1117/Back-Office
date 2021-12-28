@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header></Header>
-    <Menu v-if="menuBar"></Menu>
+    <Menu v-if="menuBar" :class="menuBar ? true : 'abc'"></Menu>
     <Body></Body>
     <User v-if="login"></User>
     <ScaleModal v-if="scaleModal"></ScaleModal>
@@ -127,7 +127,7 @@ td{
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 60px);
   background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
 }
@@ -152,7 +152,7 @@ select{
 
 #search{
   width: 192px;
-  height: 34px;
+  height: 37px;
   margin-bottom: 10px;
   border: 2px solid #E1E7EE;
   border-radius: 10px;

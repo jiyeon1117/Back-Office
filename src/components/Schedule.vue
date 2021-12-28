@@ -67,10 +67,19 @@ export default {
       });
     },
     showModal(scaleSvrId, scalePgmId){
+      
       console.log('scaleSvrId : ', scaleSvrId, ' scalePgmId : ', scalePgmId);
       var scheduleModal = []
       scheduleModal.scaleSvrId = scaleSvrId;
       scheduleModal.scalePgmId = scalePgmId;
+      // scheduleModal.comnStatSendCycleVal = comnStatSendCycleVal;
+      // scheduleModal.allProScaleCntr = allProScaleCntr;
+      // scheduleModal.comnStatDefStartTm = comnStatDefStartTm;
+      // scheduleModal.comnStatDefEndTm = comnStatDefEndTm;
+      // scheduleModal.pgmFnlExecDt = pgmFnlExecDt;
+      // scheduleModal.pgmExecStartTm = pgmExecStartTm;
+      // scheduleModal.pgmExecEndTm = pgmExecEndTm;
+
       scheduleModal.modalFlag = true;
       this.$store.commit("SET_SCHEDULE_MODAL", scheduleModal);
     },

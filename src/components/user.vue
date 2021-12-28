@@ -58,7 +58,7 @@ export default {
 <style scoped>
 .black-bg{
   width: 100%;
-  height: 100%;  
+  height: calc(100%-80px);  
   background-color: #F3F9FF;
 }
 
