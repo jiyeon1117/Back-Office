@@ -11,7 +11,7 @@ const store = new Vuex.Store({
     count: 0,
     scaleModal : false,
     scaleCode : 0,
-    scheduleModal : false,
+    scheduleModal : false, 
     scaleSvrId : "",
     scalePgmId : 0,
     menuBar: true,
@@ -21,7 +21,7 @@ const store = new Vuex.Store({
     comnStatDefStartTm : "", 
     comnStatDefEndTm : "", 
     pgmFnlExecDt : "", 
-    pgmExecStartTm : "", 
+    pgmExecStartTm : "",
     pgmExecEndTm : ""
   },
   mutations: {
