@@ -63,7 +63,7 @@ export default {
       console.log('allProScaleCntr', this.form.allProScaleCntr);
       console.log('comnStatDefStartTm', this.form.comnStatDefStartTm);
       console.log('comnStatDefEndTm', this.form.comnStatDefEndTm);
-      this.form.pgmFnlExecDt = "23:00:00";
+      this.form.pgmFnlExecDt = "2021-12-09";
       console.log('pgmFnlExecDt', this.form.pgmFnlExecDt);
       console.log('pgmExecStartTm', this.form.pgmExecStartTm);
       console.log('pgmExecEndTm', this.form.pgmExecEndTm);

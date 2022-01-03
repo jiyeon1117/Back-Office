@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Header></Header>
+    <HiddenMenu></HiddenMenu>
     <Menu v-if="menuBar" :class="menuBar ? true : 'abc'"></Menu>
     <Body></Body>
     <User v-if="login"></User>
@@ -12,6 +13,7 @@
 <script>
 import Header from './components/Header.vue'
 import Menu from './components/Menu.vue'
+import HiddenMenu from './components/HiddenMenu.vue'
 import Body from './components/Body.vue'
 import ScaleModal from './components/ScaleModal.vue'
 import ScheduleModal from './components/ScheduleModal.vue'
@@ -33,6 +35,7 @@ export default {
   components: {
     'Header' : Header,
     'Menu' : Menu,
+    'HiddenMenu' : HiddenMenu,
     'Body' : Body,
     'User' : User,
     'ScaleModal' : ScaleModal,
@@ -54,7 +57,7 @@ body {
 }
 .Eng {
   font-family: 'Roboto', sans-serif;
-  margin: 40px 0px 0px 45px;
+  margin: 40px 0px 0px 50px;
 }
 .Kor {
   font-family: 'Noto Sans KR', sans-serif;
@@ -65,8 +68,8 @@ body {
 /* 박스 관련  */
 .Box {
   position: relative;
-  padding: 0px 0px 40px 0px;
-  margin: 30px 0px 0px 45px;
+  padding-bottom: 40px;
+  margin: 30px 0px 0px 50px;
   width: 1300px;
   height: 100%;
   background-color: white;

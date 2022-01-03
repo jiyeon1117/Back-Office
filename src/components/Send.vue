@@ -48,7 +48,7 @@ export default {
       taskList: [], taskFilter : [],
       tasks: ['저울 상품', '도축장', '용도', '판매종료', '위해 개체', '생산 등록', '가격 변경', '단축키 전송'],
       checkbox : [], allSelected: false, checkList: [],
-      pageNum: 0, pageSize: 8,
+      pageNum: 0, pageSize: 5,
     }
   },
   computed: {

@@ -9,14 +9,14 @@ import ScaleModal from '@/components/ScaleModal'
 import ScheduleModal from '@/components/ScheduleModal'
 import Login from '@/components/user'
 
-import VueRouter from 'vue-router'
+// import VueRouter from 'vue-router'
 
-const origin = VueRouter.prototype.push;
-VueRouter.prototype.push =  function push(location) {
-  return origin.call(this, location).catch(() => {
-    return window.location.reload()
-  })
-}
+// const origin = VueRouter.prototype.push;
+// VueRouter.prototype.push =  function push(location) {
+//   return origin.call(this, location).catch(() => {
+//     return window.location.reload()
+//   })
+// }
 
 Vue.use(Router)
 

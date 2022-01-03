@@ -64,11 +64,11 @@ button{
 .menu {
   display: block;
   width: 25px;
-  margin: auto 0px auto 30px;
+  margin: auto 0px auto 20px;
 }
 .user {
   display: block;
-  margin: 25% 30px 25% 0px;
+  margin: 25% 20px 25% 0px;
   width: 24px;
 }
 </style>

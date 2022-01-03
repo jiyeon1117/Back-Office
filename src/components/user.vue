@@ -2,7 +2,7 @@
   <div class="black-bg">
     <div class="white-bg">
       <div class="box-title">Login</div>
-      <input type="text" v-model="form.email" class="id" placeholder="Email">
+      <input type="text" v-model="form.email" class="id" placeholder="Email" @keyup.enter="$event.target.nextElementSibling.focus()">
       <input type="password" v-model="form.userPwd" placeholder="PASSWORD" @keyup.enter="submit()">
       <button class="login" @click="submit()">Login</button>
     </div>
@@ -58,7 +58,7 @@ export default {
 <style scoped>
 .black-bg{
   width: 100%;
-  height: calc(100%-80px);  
+  height: calc(100%-80px);
   background-color: #F3F9FF;
 }
 
@@ -72,6 +72,7 @@ export default {
 .white-bg{
   text-align: center;
   justify-content: center;
+  box-shadow: 0px 0px 4px 0px rgba(61, 36, 36, 0.2);
   border-radius: 10px;
   width: 460px;
   height: 410px;
